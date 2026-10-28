@@ -11,7 +11,7 @@ from manim import *
 class AnimasiTransformasi2D(Scene):
     def construct(self):
         # 1. Judul & Dosen
-        title = Text("Transformasi Matriks 2D — UNU Kalbar", font_size=28, color=BLUE_B).to_edge(UP)
+        title = Text("Transformasi Matriks 2D :  UNU Kalbar", font_size=28, color=BLUE_B).to_edge(UP)
         sub = Text("Dosen: Aditya Pratama • Aljabar Linier & Geometri", font_size=16, color=GRAY_B).next_to(title, DOWN, buff=0.1)
         self.play(FadeIn(title), FadeIn(sub))
         self.wait(1)

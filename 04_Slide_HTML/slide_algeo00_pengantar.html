@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Algeo 00: Pengantar Aljabar Linier & Geometri — UNU Kalbar</title>
+  <title>Algeo 00: Pengantar Aljabar Linier & Geometri: UNU Kalbar</title>
   <!-- KaTeX for math formulas -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -12,10 +12,10 @@
   <style>
     :root {
       --bg-color: #0b1120;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --primary: #38bdf8;
-      --accent: #818cf8;
+      --card-bg: #151e32;
+      --card-border: #24324d;
+      --primary: #10b981;
+      --accent: #38bdf8;
       --success: #34d399;
       --warn: #fbbf24;
       --text-main: #f8fafc;
@@ -330,14 +330,14 @@
     <div class="header-title">
       <img src="assets/logo_unukalbar.png" alt="UNU Kalbar" style="height: 24px; vertical-align: middle;">
       <span class="header-badge">ALGEO 00</span>
-      <span>Pengantar Aljabar Linier & Geometri Komputasi — UNU Kalbar</span>
+      <span>Pengantar Aljabar Linier & Geometri Komputasi: UNU Kalbar</span>
     </div>
     <div class="header-controls">
       <button class="btn-icon" onclick="toggleFullscreen()" title="Fullscreen (F)">
-        ⛶ Layar Penuh <span class="key-hint">F</span>
+        Layar Penuh <span class="key-hint">F</span>
       </button>
       <a href="index.html" class="btn-icon" style="text-decoration:none;">
-        🏠 Beranda
+        Beranda
       </a>
     </div>
   </header>
@@ -386,15 +386,15 @@
 
       <div class="grid-3">
         <div class="card">
-          <div class="card-title">🖥️ Ruang & Citra</div>
+          <div class="card-title">Grafika & Citra Digital</div>
           <div class="card-desc">Semua piksel gambar dan objek 3D game adalah susunan bilangan matriks yang diputar dan diskalakan.</div>
         </div>
         <div class="card">
-          <div class="card-title">🤖 Kecerdasan Buatan</div>
+          <div class="card-title">Kecerdasan Artifisial</div>
           <div class="card-desc">Deep Learning & LLM (seperti ChatGPT) pada dasarnya adalah jutaan perkalian matriks bobot (*tensors*).</div>
         </div>
         <div class="card">
-          <div class="card-title">🔎 Pencarian Cerdas</div>
+          <div class="card-title">Temu Balik Informasi (IR)</div>
           <div class="card-desc">Mesin pencari mengukur kemiripan kueri Anda dengan artikel web menggunakan sudut antar-vektor (*Cosine Similarity*).</div>
         </div>
       </div>
@@ -536,7 +536,7 @@
       <h1>Revolusi AI (LLM) & Komputasi Kuantum</h1>
       <div class="grid-2">
         <div class="card">
-          <div class="card-title">🧠 Large Language Model (Transformer)</div>
+          <div class="card-title">Model Bahasa Besar (LLM)</div>
           <div class="card-desc">
             Model seperti ChatGPT memahami hubungan antar kata dalam kalimat dengan mekanisme atensi (*Self-Attention*):
             $$\text{Attention}(Q,K,V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
@@ -544,7 +544,7 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-title">⚛️ Komputasi Kuantum</div>
+          <div class="card-title">Komputasi Kuantum</div>
           <div class="card-desc">
             Qubit berada pada superposisi vektor status di ruang Hilbert 2D:
             $$|\psi\rangle = \alpha |0\rangle + \beta |1\rangle$$
@@ -554,7 +554,7 @@
       </div>
     </div>
 
-    <!-- SLIDE 9: Contoh Latihan 1 — Cosine Similarity -->
+    <!-- SLIDE 9: Contoh Latihan 1: Cosine Similarity -->
     <div class="slide" data-index="8">
       <div class="slide-tag">CONTOH LATIHAN APLIKATIF #1</div>
       <h1>Latihan 1: Perhitungan Kemiripan Dokumen (IR)</h1>
@@ -581,13 +581,13 @@
             <strong>Hitung Dokumen 2 ($D_2$):</strong><br>
             $Q \cdot D_2 = (2)(1) + (1)(3) = 5$<br>
             $\cos \theta_2 = \frac{5}{\sqrt{5} \cdot \sqrt{10}} = \frac{5}{\sqrt{50}} \approx \mathbf{0.707} \quad (70.7\%)$<br>
-            👉 <strong>Kesimpulan:</strong> Dokumen $D_1$ paling relevan (paralel sempurna terhadap kueri).
+            <strong>Kesimpulan:</strong> Dokumen $D_1$ paling relevan (paralel sempurna terhadap kueri).
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 10: Contoh Latihan 2 — Transformasi Matriks 2D -->
+    <!-- SLIDE 10: Contoh Latihan 2: Transformasi Matriks 2D -->
     <div class="slide" data-index="9">
       <div class="slide-tag">CONTOH LATIHAN APLIKATIF #2</div>
       <h1>Latihan 2: Transformasi Koordinat Objek Grafika</h1>
@@ -612,7 +612,7 @@
             $$P' = R_{90^\circ} \cdot P = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} -3 \\ 2 \end{bmatrix}$$
             <strong>Tahap 2 (Skala 2x):</strong><br>
             $$P'' = S \cdot P' = \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix} \begin{bmatrix} -3 \\ 2 \end{bmatrix} = \begin{bmatrix} -6 \\ 4 \end{bmatrix}$$
-            👉 <strong>Posisi Akhir:</strong> Titik berpindah ke koordinat $(-6, 4)$!<br>
+            <strong>Posisi Akhir:</strong> Titik berpindah ke koordinat $(-6, 4)$!<br>
             *(Atau dihitung sekaligus: $T = S \cdot R_{90^\circ} = \begin{bmatrix} 0 & -2 \\ 2 & 0 \end{bmatrix}$)*.
           </div>
         </div>
@@ -668,7 +668,7 @@
       </div>
 
       <div class="callout callout-warning" style="margin-top:15px; text-align:center;">
-        👉 <strong>Materi Selanjutnya:</strong> Review Operasi Matriks (Algeo 01) dan Menemukan Bentuk Eselon Baris (Algeo 02).
+        <strong>Materi Selanjutnya:</strong> Review Operasi Matriks (Algeo 01) dan Menemukan Bentuk Eselon Baris (Algeo 02).
       </div>
     </div>
 

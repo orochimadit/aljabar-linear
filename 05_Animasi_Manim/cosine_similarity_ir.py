@@ -1,7 +1,7 @@
 """
 ================================================================================
 ANIMASI MANIM: COSINE SIMILARITY / MESIN PENCARI (ALGEO 00)
-Mata Kuliah : Aljabar Linier & Geometri — UNU Kalbar
+Mata Kuliah : Aljabar Linier & Geometri :  UNU Kalbar
 Dosen       : Aditya Pratama
 Referensi   : Rinaldi Munir (STEI ITB) & 3Blue1Brown
 ================================================================================

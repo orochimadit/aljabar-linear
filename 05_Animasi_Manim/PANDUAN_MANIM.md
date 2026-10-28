@@ -2,11 +2,11 @@
 
 **Universitas Nahdlatul Ulama Kalimantan Barat (UNU Kalbar)**  
 **Dosen:** Aditya Pratama  
-*Engine:* **Manim (Mathematical Animation Engine)** — Engine animasi matematika yang dipopulerkan oleh Grant Sanderson (*3Blue1Brown*).
+*Engine:* **Manim (Mathematical Animation Engine)** :  Engine animasi matematika yang dipopulerkan oleh Grant Sanderson (*3Blue1Brown*).
 
 ---
 
-## 🚀 1. Persiapan & Instalasi Cepat (Windows)
+##  1. Persiapan & Instalasi Cepat (Windows)
 
 Manim membutuhkan dua komponen utama: **FFmpeg** (untuk rendering video `.mp4`) dan pustaka **manim** Python.
 
@@ -25,7 +25,7 @@ pip install manim
 
 ---
 
-## 🎬 2. Koleksi Skrip Animasi Siap Pakai
+##  2. Koleksi Skrip Animasi Siap Pakai
 
 Folder ini sudah dilengkapi 3 skrip animasi Manim yang diselaraskan dengan materi perkuliahan:
 
@@ -37,7 +37,7 @@ Folder ini sudah dilengkapi 3 skrip animasi Manim yang diselaraskan dengan mater
 
 ---
 
-## 🎥 3. Cara Me-render Video Animasi (.mp4)
+##  3. Cara Me-render Video Animasi (.mp4)
 
 Buka terminal/PowerShell di dalam folder `Matematika 2 - Aljabar Linear/05_Animasi_Manim/`, lalu jalankan perintah render berikut:
 

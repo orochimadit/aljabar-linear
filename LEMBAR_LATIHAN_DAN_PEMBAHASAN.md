@@ -2,15 +2,15 @@
 
 **Universitas Nahdlatul Ulama Kalimantan Barat (UNU Kalbar)**  
 **Dosen Pengampu:** Aditya Pratama  
-*Diadaptasi dari kumpulan soal latihan:* Prof. Dr. Ir. Rinaldi Munir (STEI ITB) & Howard Anton (*Elementary Linear Algebra*).
+*Diadaptasi dari kumpulan soal latihan:* Rinaldi Munir (STEI ITB) & Howard Anton (*Elementary Linear Algebra*).
 
 ---
 
-## 📌 BAGIAN 1: LATIHAN ALGEO 00 (APLIKASI KOMPUTASI ALJABAR LINIER)
+## Bagian 1: Latihan Algeo 00 (Aplikasi Komputasi Aljabar Linier)
 
-### Soal 1.1 — Pemodelan Information Retrieval & Cosine Similarity
-Sebuah sistem mesin pencari sederhana menggunakan model ruang vektor (*Vector Space Model*) untuk memeringkat relevansi artikel berita.
-Diberikan representasi vektor kueri pencarian $Q$ dan tiga dokumen artikel dalam database berdasarkan frekuensi kemunculan dua kata kunci ("Kecerdasan" dan "Artifisial"):
+### Soal 1.1: Pemodelan Information Retrieval & Cosine Similarity
+Sebuah sistem temu balik informasi (*search engine*) sederhana menggunakan model ruang vektor (*Vector Space Model*) untuk memeringkat relevansi artikel berita.
+Diberikan representasi vektor kueri pencarian $Q$ dan tiga dokumen artikel dalam basis data berdasarkan frekuensi kemunculan dua kata kunci ("Kecerdasan" dan "Artifisial"):
 * Vektor Kueri: $Q = (3, 4)$
 * Dokumen 1: $D_1 = (6, 8)$
 * Dokumen 2: $D_2 = (1, 7)$
@@ -19,9 +19,9 @@ Diberikan representasi vektor kueri pencarian $Q$ dan tiga dokumen artikel dalam
 **Pertanyaan:**
 1. Hitung panjang (norma Euclidean) dari masing-masing vektor.
 2. Hitung nilai kemiripan sudut (*Cosine Similarity*) antara $Q$ dengan masing-masing dokumen.
-3. Urutkan dokumen dari yang paling relevan hingga yang paling tidak relevan!
+3. Urutkan dokumen dari yang paling relevan hingga yang paling tidak relevan.
 
-#### 💡 Pembahasan Soal 1.1:
+#### Pembahasan Soal 1.1:
 1. **Panjang Norma Euclidean ($\|V\| = \sqrt{x^2 + y^2}$):**
    * $\|Q\| = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5$
    * $\|D_1\| = \sqrt{6^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10$
@@ -44,7 +44,7 @@ Diberikan representasi vektor kueri pencarian $Q$ dan tiga dokumen artikel dalam
 
 ---
 
-### Soal 1.2 — Transformasi Matriks 2D Objek Grafika
+### Soal 1.2: Transformasi Matriks 2D Objek Grafika
 Sebuah titik poligon $P(4, 2)$ pada layar monitor akan diproses oleh pipa grafika dengan urutan sebagai berikut:
 1. Diputar $90^\circ$ berlawanan arah jarum jam dengan matriks rotasi $R_{90^\circ} = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}$.
 2. Hasil rotasi diskalakan 3 kali lipat dengan matriks skala $S = \begin{bmatrix} 3 & 0 \\ 0 & 3 \end{bmatrix}$.
@@ -53,7 +53,7 @@ Sebuah titik poligon $P(4, 2)$ pada layar monitor akan diproses oleh pipa grafik
 1. Tentukan matriks transformasi gabungan $T = S \cdot R_{90^\circ}$.
 2. Tentukan koordinat titik akhir $P''$.
 
-#### 💡 Pembahasan Soal 1.2:
+#### Pembahasan Soal 1.2:
 1. **Perkalian Matriks Transformasi Gabungan $T$:**
    $$T = S \cdot R_{90^\circ} = \begin{bmatrix} 3 & 0 \\ 0 & 3 \end{bmatrix} \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} = \begin{bmatrix} (3)(0)+0 & (3)(-1)+0 \\ 0+(3)(1) & 0+(3)(0) \end{bmatrix} = \begin{bmatrix} 0 & -3 \\ 3 & 0 \end{bmatrix}$$
 2. **Koordinat Titik Akhir $P''$:**
@@ -62,13 +62,13 @@ Sebuah titik poligon $P(4, 2)$ pada layar monitor akan diproses oleh pipa grafik
 
 ---
 
-## 📌 BAGIAN 2: LATIHAN ALGEO 02 (MATRIKS ESELON BARIS & TEREDUKSI)
+## Bagian 2: Latihan Algeo 02 (Matriks Eselon Baris & Tereduksi)
 
-### Soal 2.1 — Klasifikasi Status Bentuk Matriks
+### Soal 2.1: Klasifikasi Status Bentuk Matriks
 Tentukan apakah matriks-matriks di bawah ini merupakan:
 - **(i)** Matriks Eselon Baris (REF saja)
 - **(ii)** Matriks Eselon Baris Tereduksi (RREF / Keduanya)
-- **(iii)** Bukan Keduanya (Jelaskan sifat yang dilanggar!)
+- **(iii)** Bukan Keduanya (Jelaskan sifat yang dilanggar)
 
 1. $A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$
 2. $B = \begin{bmatrix} 1 & 4 & -2 & 3 \\ 0 & 1 & 0 & 7 \\ 0 & 0 & 1 & 1 \end{bmatrix}$
@@ -79,7 +79,7 @@ Tentukan apakah matriks-matriks di bawah ini merupakan:
 7. $G = \begin{bmatrix} 1 & 3 & 5 \\ 0 & 0 & 1 \\ 0 & 1 & 0 \end{bmatrix}$
 8. $H = \begin{bmatrix} 0 & 1 & 2 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$
 
-#### 💡 Pembahasan Soal 2.1:
+#### Pembahasan Soal 2.1:
 1. **Matriks $A$:** **Keduanya (REF & RREF)**. Ini adalah matriks identitas $I_3$. Setiap kolom yang memuat 1 utama memiliki nilai nol di semua entri lainnya.
 2. **Matriks $B$:** **Hanya REF**. Di atas 1 utama baris 2 (kolom 2) terdapat angka 4, dan di atas 1 utama baris 3 (kolom 3) terdapat angka $-2$ dan $0$. Belum nol bersih di atas 1 utama, sehingga bukan RREF.
 3. **Matriks $C$:** **Keduanya (REF & RREF)**. Kolom 1, 2, dan 3 memuat 1 utama dan seluruh entri lain di kolom tersebut bernilai 0. Kolom 4 berisi angka sembarang tidak masalah karena kolom 4 bukan kolom 1 utama.
@@ -91,7 +91,7 @@ Tentukan apakah matriks-matriks di bawah ini merupakan:
 
 ---
 
-### Soal 2.2 — Praktik Operasi Baris Elementer (OBE)
+### Soal 2.2: Praktik Operasi Baris Elementer (OBE)
 Diberikan matriks $M$:
 $$M = \begin{bmatrix}
 2 & 4 & -2 & \bigm| & 6 \\
@@ -102,9 +102,9 @@ $$M = \begin{bmatrix}
 **Tugas:**
 1. Lakukan Eliminasi Gauss untuk mengubah matriks $M$ menjadi bentuk **Eselon Baris (REF)**.
 2. Lanjutkan dengan Eliminasi Gauss-Jordan untuk mengubahnya menjadi bentuk **Eselon Baris Tereduksi (RREF)**.
-3. Tuliskan nilai solusi unik $(x_1, x_2, x_3)$ yang diperoleh!
+3. Tuliskan nilai solusi unik $(x_1, x_2, x_3)$ yang diperoleh.
 
-#### 💡 Pembahasan Soal 2.2:
+#### Pembahasan Soal 2.2:
 
 * **Tahap 1: Membentuk 1 Utama Baris 1**
   Operasi: $R_1 \leftarrow \frac{1}{2} R_1$
@@ -133,14 +133,14 @@ $$M = \begin{bmatrix}
   0 & 0 & 44 & \bigm| & -16
   \end{bmatrix}$$
 
-* **Tahap 4: Membentuk 1 Utama Baris 3 $\to$ Bentuk REF Tercapai!**
+* **Tahap 4: Membentuk 1 Utama Baris 3 -> Bentuk REF Tercapai**
   Operasi: $R_3 \leftarrow \frac{1}{44} R_3$
   $$M_{\text{REF}} = \begin{bmatrix}
   \mathbf{1} & 2 & -1 & \bigm| & 3 \\
   0 & \mathbf{1} & 5 & \bigm| & -1 \\
   0 & 0 & \mathbf{1} & \bigm| & -\frac{4}{11}
   \end{bmatrix}$$
-  ✅ **Matriks Eselon Baris (REF) telah terpenuhi.**
+  **Status: Matriks Eselon Baris (REF) telah terpenuhi.**
 
 * **Tahap 5: Gauss-Jordan Menuju RREF (Nol-kan di Atas 1 Utama)**
   - Nol-kan kolom 3:

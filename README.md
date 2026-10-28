@@ -12,14 +12,14 @@
 
 ---
 
-## 📖 Tentang Repositori
+## Tentang Repositori
 Repositori ini memuat perangkat ajar lengkap untuk mata kuliah **Matematika 2 (Aljabar Linier & Geometri)** pada program studi bidang teknologi informasi di **Universitas Nahdlatul Ulama Kalimantan Barat**.
 
 Materi difokuskan pada pemahaman matematis intuitif yang dipadukan dengan implementasi komputasi praktis: Grafika Komputer, Kecerdasan Buatan (AI/LLM), Sistem Temu Balik Informasi (*Search Engine*), dan Komputasi Numerik.
 
 ---
 
-## 📁 Struktur Repositori
+## Struktur Repositori
 
 ```text
 aljabar-linear/
@@ -48,7 +48,7 @@ aljabar-linear/
 
 ---
 
-## 🎯 Komponen Materi Pembelajaran
+## Komponen Materi Pembelajaran
 
 ### 1. Slide Presentasi Web Interaktif (`04_Slide_HTML/`)
 Slide perkuliahan modern tanpa memerlukan server khusus, cukup klik dua kali pada file HTML:
@@ -89,7 +89,7 @@ python simulasi_algeo_interaktif.py
 
 ---
 
-## 👨‍🏫 Kontak & Pengampu
+## Kontak & Pengampu
 * **Dosen Pengampu:** Aditya Pratama
 * **Institusi:** Program Studi Informatika / Sistem Informasi, Universitas Nahdlatul Ulama Kalimantan Barat
 * **Rujukan Akademis:** Rinaldi Munir (STEI ITB) & Howard Anton (*Elementary Linear Algebra*, Wiley)

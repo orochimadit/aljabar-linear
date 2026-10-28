@@ -3,7 +3,7 @@
 SIMULASI & VISUALISASI INTERAKTIF ALJABAR LINIER (ALGEO 00 & ALGEO 02)
 Universitas Nahdlatul Ulama Kalimantan Barat (UNU Kalbar)
 Dosen Pengampu : Aditya Pratama
-Referensi     : Prof. Dr. Ir. Rinaldi Munir (STEI ITB) & Howard Anton
+Referensi     : Rinaldi Munir (STEI ITB) & Howard Anton
 ================================================================================
 Fitur Utama:
 1. Tab 1 (Algeo 00): Animasi Interaktif Transformasi Geometri 2D & Matriks
@@ -47,7 +47,7 @@ COLOR_WARN = "#fbbf24"      # Amber 400
 class AlgeoSimulatorApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Simulasi Aljabar Linier & Geometri — UNU Kalbar (Aditya Pratama)")
+        self.title("Simulasi Aljabar Linier & Geometri - UNU Kalbar (Aditya Pratama)")
         self.geometry("1100x720")
         self.minsize(980, 640)
         self.configure(bg=COLOR_BG)
@@ -75,9 +75,9 @@ class AlgeoSimulatorApp(tk.Tk):
         self.tab_eselon = ttk.Frame(self.notebook)
         self.tab_ir = ttk.Frame(self.notebook)
 
-        self.notebook.add(self.tab_transform, text="🎬 Algeo 00: Animasi Transformasi 2D")
-        self.notebook.add(self.tab_eselon, text="📐 Algeo 02: Simulator Langkah Matriks Eselon (OBE)")
-        self.notebook.add(self.tab_ir, text="🔍 Algeo 00: Simulasi Cosine Similarity (IR)")
+        self.notebook.add(self.tab_transform, text="Algeo 00: Transformasi Geometri 2D")
+        self.notebook.add(self.tab_eselon, text="Algeo 02: Eliminasi Matriks Eselon (OBE)")
+        self.notebook.add(self.tab_ir, text="Algeo 00: Cosine Similarity (IR)")
 
         self._init_tab_transform()
         self._init_tab_eselon()
@@ -443,7 +443,7 @@ class AlgeoSimulatorApp(tk.Tk):
 
         steps.append({
             "mat": M.copy(),
-            "desc": "✅ TAHAP ELIMINASI GAUSS SELESAI: Matriks kini berada dalam bentuk ESELON BARIS (Row Echelon Form - REF)!",
+            "desc": "Tahap Eliminasi Gauss Selesai: Matriks berada dalam bentuk Eselon Baris (REF).",
             "op": "REF Tercapai"
         })
 
@@ -468,7 +468,7 @@ class AlgeoSimulatorApp(tk.Tk):
 
         steps.append({
             "mat": M.copy(),
-            "desc": "🎯 TAHAP GAUSS-JORDAN SELESAI: Matriks berada dalam bentuk ESELON BARIS TEREDUKSI (Reduced Row Echelon Form - RREF)!",
+            "desc": "Tahap Gauss-Jordan Selesai: Matriks berada dalam bentuk Eselon Baris Tereduksi (RREF).",
             "op": "RREF Tercapai"
         })
 
@@ -501,11 +501,11 @@ class AlgeoSimulatorApp(tk.Tk):
 
         # Status Eselon
         if self.current_eselon_idx == total - 1:
-            self.lbl_status_eselon.config(text="Status: 🌟 Eselon Baris Tereduksi (RREF) Sah & Selesai!", fg=COLOR_SUCCESS)
+            self.lbl_status_eselon.config(text="Status: Eselon Baris Tereduksi (RREF) Terpenuhi", fg=COLOR_SUCCESS)
         elif self.current_eselon_idx >= total - 3:
-            self.lbl_status_eselon.config(text="Status: 📐 Matriks Eselon Baris (REF) Terpenuhi", fg=COLOR_PRIMARY)
+            self.lbl_status_eselon.config(text="Status: Matriks Eselon Baris (REF) Terpenuhi", fg=COLOR_PRIMARY)
         else:
-            self.lbl_status_eselon.config(text="Status: ⚙️ Proses OBE Sedang Berjalan...", fg=COLOR_WARN)
+            self.lbl_status_eselon.config(text="Status: Eliminasi OBE Berjalan...", fg=COLOR_WARN)
 
         # Log deskripsi
         self.txt_eselon_log.delete("1.0", tk.END)
