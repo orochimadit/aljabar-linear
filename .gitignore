@@ -1,0 +1,15 @@
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Manim rendering cache & intermediate video chunks
+05_Animasi_Manim/media/
+media/
+
+# OS & Editor generated files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

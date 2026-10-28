@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algeo 00: Pengantar Aljabar Linier & Geometri — UNU Kalbar</title>
+  <!-- KaTeX for math formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+    :root {
+      --bg-color: #0b1120;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --primary: #38bdf8;
+      --accent: #818cf8;
+      --success: #34d399;
+      --warn: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    #progress-container {
+      width: 100%;
+      height: 5px;
+      background: #1e293b;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      transition: width 0.3s ease;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 24px;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+    .header-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-icon {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-icon:hover {
+      background: var(--card-border);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    #slide-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 92%;
+      max-width: 1100px;
+      height: 85vh;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 34px 46px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 5;
+    }
+
+    .slide.prev { transform: translateX(-40px); }
+
+    .slide-tag {
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+    .slide h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.25;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .slide p {
+      font-size: 1.02rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 10px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-desc {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 0 10px 10px 0;
+      margin: 10px 0;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+      border-top: 1px solid var(--card-border);
+      background: rgba(15, 23, 42, 0.95);
+      z-index: 10;
+    }
+    .slide-counter { font-size: 0.88rem; color: var(--text-muted); }
+    .nav-buttons { display: flex; gap: 10px; }
+    .btn-nav {
+      background: var(--primary);
+      color: #0b1120;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { background: #7dd3fc; }
+    .btn-nav.secondary {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+    }
+
+    .key-hint {
+      background: #334155;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: #cbd5e1;
+      margin-left: 4px;
+    }
+
+    .title-slide {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .title-slide h1 {
+      font-size: 2.8rem;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .course-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      justify-content: center;
+    }
+    .meta-box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+    }
+    .meta-box strong {
+      color: var(--primary);
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    /* Live Canvas Widget Styles */
+    .sim-box {
+      display: flex;
+      gap: 20px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .sim-canvas {
+      background: #060d1a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+    }
+    .sim-ctrl { flex: 1; }
+    .sim-slider-group { margin-bottom: 10px; }
+    .sim-slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .sim-slider-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+    .matrix-live-display {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      font-size: 0.88rem;
+      color: var(--success);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <header>
+    <div class="header-title">
+      <img src="assets/logo_unukalbar.png" alt="UNU Kalbar" style="height: 24px; vertical-align: middle;">
+      <span class="header-badge">ALGEO 00</span>
+      <span>Pengantar Aljabar Linier & Geometri Komputasi — UNU Kalbar</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-icon" onclick="toggleFullscreen()" title="Fullscreen (F)">
+        ⛶ Layar Penuh <span class="key-hint">F</span>
+      </button>
+      <a href="index.html" class="btn-icon" style="text-decoration:none;">
+        🏠 Beranda
+      </a>
+    </div>
+  </header>
+
+  <main id="slide-viewport">
+
+    <!-- SLIDE 1: Title Slide (UNU Kalbar) -->
+    <div class="slide title-slide active" data-index="0">
+      <div style="margin-bottom: 10px;">
+        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" style="height: 100px; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5));">
+      </div>
+      <div class="slide-tag">UNIVERSITAS NAHDLATUL ULAMA KALIMANTAN BARAT</div>
+      <h1>Pengantar Aljabar Linier & Geometri</h1>
+      <p style="font-size: 1.25rem; color: #94a3b8; max-width: 760px;">
+        Pondasi Matematis Komputasi Modern: Dari Grafika Komputer, Kecerdasan Buatan (AI/LLM), hingga Sains Data.
+      </p>
+      <div class="course-meta">
+        <div class="meta-box">
+          <strong>Dosen Pengampu</strong>
+          Aditya Pratama
+        </div>
+        <div class="meta-box">
+          <strong>Program Studi & Institusi</strong>
+          Informatika / Sains Data • UNU Kalbar
+        </div>
+        <div class="meta-box">
+          <strong>Rujukan Akademis</strong>
+          Rinaldi Munir (ITB) & Howard Anton
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Motivasi & Paradigma -->
+    <div class="slide" data-index="1">
+      <div class="slide-tag">PARADIGMA PERKULIAHAN</div>
+      <h1>Bukan Sekadar Menghitung Angka di Kertas</h1>
+      <p>
+        Bagi seorang mahasiswa teknologi informasi, <strong>Aljabar Linier adalah bahasa pemrograman bagi ruang dan data</strong>. Kita merancang algoritma yang dieksekusi miliaran kali per detik di atas GPU.
+      </p>
+
+      <div class="callout">
+        <strong>Inti Aljabar Linier dalam Sains Komputer:</strong><br>
+        1. <strong>Vektor</strong> = Representasi suatu status, fitur gambar, teks embedding, atau posisi koordinat.<br>
+        2. <strong>Matriks</strong> = Mesin transformasi yang mengubah arah, memutar, memfilter, atau mengompresi data tersebut.
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">🖥️ Ruang & Citra</div>
+          <div class="card-desc">Semua piksel gambar dan objek 3D game adalah susunan bilangan matriks yang diputar dan diskalakan.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🤖 Kecerdasan Buatan</div>
+          <div class="card-desc">Deep Learning & LLM (seperti ChatGPT) pada dasarnya adalah jutaan perkalian matriks bobot (*tensors*).</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔎 Pencarian Cerdas</div>
+          <div class="card-desc">Mesin pencari mengukur kemiripan kueri Anda dengan artikel web menggunakan sudut antar-vektor (*Cosine Similarity*).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Live Interactive Canvas 2D Transformation -->
+    <div class="slide" data-index="2">
+      <div class="slide-tag">SIMULASI INTERAKTIF LANGSUNG</div>
+      <h1>Melihat Matriks Mentransformasikan Ruang</h1>
+      <p>
+        Cobalah geser slider di bawah ini. Perhatikan bagaimana matriks $T = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$ menggerakkan vektor basis $\hat{i}$ (hijau) dan $\hat{j}$ (ungu) serta memutar objek:
+      </p>
+
+      <div class="sim-box">
+        <canvas id="live-canvas" class="sim-canvas" width="340" height="280"></canvas>
+        <div class="sim-ctrl">
+          <div class="sim-slider-group">
+            <label><span>Sudut Rotasi ($\theta$):</span> <strong id="val-rot">0°</strong></label>
+            <input type="range" id="slider-rot" min="-180" max="180" value="0">
+          </div>
+          <div class="sim-slider-group">
+            <label><span>Skala Ukuran ($s$):</span> <strong id="val-scale">1.0x</strong></label>
+            <input type="range" id="slider-scale" min="0.2" max="2.0" step="0.1" value="1.0">
+          </div>
+          <div class="sim-slider-group">
+            <label><span>Geseran / Shear X ($k$):</span> <strong id="val-shear">0.0</strong></label>
+            <input type="range" id="slider-shear" min="-1.5" max="1.5" step="0.1" value="0.0">
+          </div>
+          <button class="btn-icon" onclick="resetSim()" style="margin-top:4px;">↺ Reset Transformasi</button>
+
+          <div class="matrix-live-display" id="matrix-display">
+            T = [ 1.00 , 0.00 ; 0.00 , 1.00 ]
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Grafika Komputer & Transformasi 3D -->
+    <div class="slide" data-index="3">
+      <div class="slide-tag">APLIKASI KOMPUTASI #1</div>
+      <h1>Grafika Komputer: Transformasi Geometri Homogen</h1>
+      <p>
+        Di dunia grafika 3D, koordinat objek $(x, y, z)$ diperluas menjadi koordinat homogen $(x, y, z, 1)$ menggunakan matriks berukuran $4 \times 4$.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Matriks Pipa Grafika (MVP Matrix)</div>
+          <div class="card-desc">
+            $$P_{\text{layar}} = M_{\text{Projection}} \cdot M_{\text{View}} \cdot M_{\text{Model}} \cdot P_{\text{lokal}}$$
+            Translasi, rotasi, dan pembesaran objek dapat digabung (*concatenated*) menjadi satu perkalian matriks tunggal sehingga GPU memproses jutaan poligon secara instan.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Proyeksi Perspektif ke Layar 2D</div>
+          <div class="card-desc">
+            Bagaimana monitor datar Anda menampilkan ilusi kedalaman ruang 3D? Komputer membagi koordinat dengan nilai kedalaman $w = z$, prinsip yang diadaptasi langsung dari konsep aljabar proyektif.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Information Retrieval & Cosine Similarity -->
+    <div class="slide" data-index="4">
+      <div class="slide-tag">APLIKASI KOMPUTASI #2</div>
+      <h1>Sistem Temu Balik Informasi (Search Engine)</h1>
+      <p>
+        Bagaimana sistem seperti Google, perayap web, atau pencarian dokumen menemukan dokumen yang paling relevan dengan kueri pengguna?
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Vector Space Model (VSM)</div>
+          <div class="card-desc">
+            Setiap dokumen teks dan kueri pencarian dikonversi menjadi vektor numerik berbobot frekuensi kata:
+            $$D = (w_1, w_2, \dots, w_n), \quad Q = (q_1, q_2, \dots, q_n)$$
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Cosine Similarity (Dot Product)</div>
+          <div class="card-desc">
+            Mengukur sudut kemiripan $\theta$ antara kueri dan dokumen:
+            $$\cos \theta = \frac{Q \cdot D}{\|Q\| \|D\|}$$
+            Jika $\cos \theta = 1$ ($0^\circ$), isi dokumen sangat relevan dengan kueri pencarian!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Computer Vision & Face Recognition -->
+    <div class="slide" data-index="5">
+      <div class="slide-tag">APLIKASI KOMPUTASI #3</div>
+      <h1>Visi Komputer: Pengenalan Wajah & SVD</h1>
+      <p>
+        Gambar digital adalah matriks nilai piksel. Citra wajah $100 \times 100$ menghasilkan vektor 10.000 dimensi yang sangat berat diproses secara langsung.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Metode Eigenfaces (Vektor Eigen)</div>
+          <div class="card-desc">
+            Dengan menghitung <em>vektor eigen</em> dari matriks kovariansi sekumpulan wajah, kita memperoleh "wajah basis" (*eigenfaces*). Setiap wajah baru cukup dikenali dari kombinasi bobot terhadap eigenfaces tersebut.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Singular Value Decomposition (SVD)</div>
+          <div class="card-desc">
+            Dekomposisi $A = U \Sigma V^T$ memampatkan matriks gambar dengan membuang nilai singular kecil tanpa merusak kualitas visual (dasar kompresi gambar JPEG & reduksi noise).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Game Dev & Quaternion -->
+    <div class="slide" data-index="6">
+      <div class="slide-tag">APLIKASI KOMPUTASI #4</div>
+      <h1>Pengembangan Game 3D: Rotasi & Quaternion</h1>
+      <p>
+        Dalam game action atau simulator penerbangan, rotasi menggunakan sudut biasa (Euler: Roll, Pitch, Yaw) memiliki kelemahan fatal berupa <strong>Gimbal Lock</strong>.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Bahaya Gimbal Lock</div>
+          <div class="card-desc">
+            Saat dua sumbu rotasi berimpit secara paralel, satu sumbu derajat kebebasan hilang. Gerakan pesawat atau kamera menjadi terkunci dan berputar tidak wajar.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Solusi: Aljabar Quaternion</div>
+          <div class="card-desc">
+            Menggunakan sistem bilangan 4 dimensi:
+            $$q = w + x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$$
+            Rotasi berlangsung sangat mulus, efisien dihitung, dan kebal dari masalah *gimbal lock*.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: AI, LLM, & Kuantum -->
+    <div class="slide" data-index="7">
+      <div class="slide-tag">APLIKASI KOMPUTASI #5 & #6</div>
+      <h1>Revolusi AI (LLM) & Komputasi Kuantum</h1>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🧠 Large Language Model (Transformer)</div>
+          <div class="card-desc">
+            Model seperti ChatGPT memahami hubungan antar kata dalam kalimat dengan mekanisme atensi (*Self-Attention*):
+            $$\text{Attention}(Q,K,V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+            Di mana $Q, K, V$ adalah matriks perkalian embedding kata berdimensi tinggi.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚛️ Komputasi Kuantum</div>
+          <div class="card-desc">
+            Qubit berada pada superposisi vektor status di ruang Hilbert 2D:
+            $$|\psi\rangle = \alpha |0\rangle + \beta |1\rangle$$
+            Operasi pada komputer kuantum diimplementasikan menggunakan gerbang logika berupa perkalian matriks uniter.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: Contoh Latihan 1 — Cosine Similarity -->
+    <div class="slide" data-index="8">
+      <div class="slide-tag">CONTOH LATIHAN APLIKATIF #1</div>
+      <h1>Latihan 1: Perhitungan Kemiripan Dokumen (IR)</h1>
+      <p>Sebuah mesin pencari menerima kueri $Q = (2, 1)$. Terdapat 2 dokumen dalam database:</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Data Vektor Dokumen</div>
+          <div style="font-size:0.92rem; color:#cbd5e1; line-height:1.6;">
+            • Vektor Kueri: $Q = (2, 1)$<br>
+            • Dokumen 1: $D_1 = (4, 2)$<br>
+            • Dokumen 2: $D_2 = (1, 3)$<br>
+            <strong>Pertanyaan:</strong> Dokumen mana yang memiliki kemiripan paling tinggi dengan kueri $Q$?
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color:var(--success);">Kunci Pembahasan Lengkap:</div>
+          <div style="font-size:0.88rem; color:#cbd5e1; line-height:1.5;">
+            <strong>Hitung Dokumen 1 ($D_1$):</strong><br>
+            $Q \cdot D_1 = (2)(4) + (1)(2) = 10$<br>
+            $\|Q\| = \sqrt{2^2 + 1^2} = \sqrt{5}, \quad \|D_1\| = \sqrt{4^2 + 2^2} = \sqrt{20}$<br>
+            $\cos \theta_1 = \frac{10}{\sqrt{5} \cdot \sqrt{20}} = \frac{10}{\sqrt{100}} = \frac{10}{10} = \mathbf{1.0} \quad (100\%)$<br><br>
+            <strong>Hitung Dokumen 2 ($D_2$):</strong><br>
+            $Q \cdot D_2 = (2)(1) + (1)(3) = 5$<br>
+            $\cos \theta_2 = \frac{5}{\sqrt{5} \cdot \sqrt{10}} = \frac{5}{\sqrt{50}} \approx \mathbf{0.707} \quad (70.7\%)$<br>
+            👉 <strong>Kesimpulan:</strong> Dokumen $D_1$ paling relevan (paralel sempurna terhadap kueri).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Contoh Latihan 2 — Transformasi Matriks 2D -->
+    <div class="slide" data-index="9">
+      <div class="slide-tag">CONTOH LATIHAN APLIKATIF #2</div>
+      <h1>Latihan 2: Transformasi Koordinat Objek Grafika</h1>
+      <p>Sebuah titik sudut karakter game berada pada koordinat $P = (2, 3)$.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Soal Transformasi Matriks</div>
+          <div style="font-size:0.92rem; color:#cbd5e1; line-height:1.6;">
+            1. Titik $P$ diputar $90^\circ$ berlawanan arah jarum jam dengan matriks:<br>
+            $$R_{90^\circ} = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}$$
+            2. Kemudian objek diperbesar 2x lipat menggunakan matriks skala:<br>
+            $$S = \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix}$$
+            <strong>Tentukan posisi akhir titik $P''$!</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color:var(--success);">Kunci Pembahasan Lengkap:</div>
+          <div style="font-size:0.88rem; color:#cbd5e1; line-height:1.5;">
+            <strong>Tahap 1 (Rotasi):</strong><br>
+            $$P' = R_{90^\circ} \cdot P = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} -3 \\ 2 \end{bmatrix}$$
+            <strong>Tahap 2 (Skala 2x):</strong><br>
+            $$P'' = S \cdot P' = \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix} \begin{bmatrix} -3 \\ 2 \end{bmatrix} = \begin{bmatrix} -6 \\ 4 \end{bmatrix}$$
+            👉 <strong>Posisi Akhir:</strong> Titik berpindah ke koordinat $(-6, 4)$!<br>
+            *(Atau dihitung sekaligus: $T = S \cdot R_{90^\circ} = \begin{bmatrix} 0 & -2 \\ 2 & 0 \end{bmatrix}$)*.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: Roadmap Perkuliahan UNU Kalbar -->
+    <div class="slide" data-index="10">
+      <div class="slide-tag">KURIKULUM & RENCANA PEMBELAJARAN</div>
+      <h1>Peta Perjalanan Belajar Semester Ini</h1>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Blok 1: Matriks & SPL</div>
+          <div class="card-desc">
+            • Review Matriks & Bentuk Eselon<br>
+            • Eliminasi Gauss & Gauss-Jordan<br>
+            • Determinan & Invers Matriks<br>
+            • Aplikasi SPL pada Rekayasa & Fisika
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Blok 2: Ruang Vektor</div>
+          <div class="card-desc">
+            • Vektor Euclidean di $\mathbb{R}^n$<br>
+            • Dot & Cross Product, IR System<br>
+            • Kombinasi Linier, Rentang (Span)<br>
+            • Basis, Dimensi & Transformasi Linier
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Blok 3: Spektral & Lanjut</div>
+          <div class="card-desc">
+            • Nilai Eigen & Vektor Eigen<br>
+            • SVD (Singular Value Decomposition)<br>
+            • Dekomposisi LU & Dekomposisi QR<br>
+            • Aljabar Quaternion & Geometri
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: Penutup & Pesan Pengampu -->
+    <div class="slide" data-index="11">
+      <div class="slide-tag">PESAN PENGAMPU PERKULIAHAN</div>
+      <h1>Langkah Pertama: Nikmati Logika di Balik Matriks</h1>
+      <p>
+        Aljabar Linier adalah investasi jangka panjang paling menguntungkan untuk karier Anda di bidang teknologi.
+      </p>
+
+      <div class="callout" style="border-left-color: var(--success);">
+        <strong>Pesan Pembuka dari Aditya Pratama:</strong><br>
+        <em>"Ketika Anda melihat matriks, jangan lihat sekadar sekumpulan baris dan kolom angka. Lihatlah sebuah sistem yang sedang memutar, meregangkan, dan mentransformasikan dunia digital kita. Selamat belajar dan mari bereksplorasi!"</em>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:15px; text-align:center;">
+        👉 <strong>Materi Selanjutnya:</strong> Review Operasi Matriks (Algeo 01) dan Menemukan Bentuk Eselon Baris (Algeo 02).
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="slide-counter">
+      Slide <span id="current-slide">1</span> dari <span id="total-slides">12</span>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav secondary" onclick="prevSlide()">
+        ◀ Sebelumnya <span class="key-hint">←</span>
+      </button>
+      <button class="btn-nav" onclick="nextSlide()">
+        Selanjutnya ▶ <span class="key-hint">→ / Spasi</span>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const currentSlideSpan = document.getElementById('current-slide');
+    const totalSlidesSpan = document.getElementById('total-slides');
+
+    totalSlidesSpan.textContent = totalSlides;
+
+    function updateSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+
+      slides.forEach((s, i) => {
+        s.classList.remove('active', 'prev');
+        if (i < index) s.classList.add('prev');
+        else if (i === index) s.classList.add('active');
+      });
+
+      currentSlide = index;
+      currentSlideSpan.textContent = currentSlide + 1;
+      progressBar.style.width = ((currentSlide + 1) / totalSlides) * 100 + '%';
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.error(err));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'PageUp') {
+        e.preventDefault(); prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    });
+
+    // ==========================================
+    // Live Canvas Transformation Simulator
+    // ==========================================
+    const canvas = document.getElementById('live-canvas');
+    const ctx = canvas.getContext('2d');
+    const sliderRot = document.getElementById('slider-rot');
+    const sliderScale = document.getElementById('slider-scale');
+    const sliderShear = document.getElementById('slider-shear');
+    const valRot = document.getElementById('val-rot');
+    const valScale = document.getElementById('val-scale');
+    const valShear = document.getElementById('val-shear');
+    const matrixDisplay = document.getElementById('matrix-display');
+
+    function drawGridAndTransform() {
+      const angle = (parseFloat(sliderRot.value) * Math.PI) / 180;
+      const scale = parseFloat(sliderScale.value);
+      const shear = parseFloat(sliderShear.value);
+
+      valRot.textContent = sliderRot.value + '°';
+      valScale.textContent = scale.toFixed(1) + 'x';
+      valShear.textContent = shear.toFixed(1);
+
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+      const a = (cosA * scale);
+      const b = (cosA * scale * shear - sinA * scale);
+      const c = (sinA * scale);
+      const d = (sinA * scale * shear + cosA * scale);
+
+      matrixDisplay.textContent = `T = [ ${a.toFixed(2)} , ${b.toFixed(2)} ; ${c.toFixed(2)} , ${d.toFixed(2)} ]`;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const unit = 40;
+
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= canvas.width; x += unit) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y <= canvas.height; y += unit) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height); ctx.stroke();
+
+      function applyT(x, y) {
+        const tx = a * x + b * y;
+        const ty = c * x + d * y;
+        return [cx + tx * unit, cy - ty * unit];
+      }
+
+      const pts = [
+        applyT(0, 0), applyT(1, 0), applyT(1, 1), applyT(0, 1)
+      ];
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      ctx.lineTo(pts[1][0], pts[1][1]);
+      ctx.lineTo(pts[2][0], pts[2][1]);
+      ctx.lineTo(pts[3][0], pts[3][1]);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      const ihat = applyT(1, 0);
+      drawVector(cx, cy, ihat[0], ihat[1], '#34d399', 'î');
+
+      const jhat = applyT(0, 1);
+      drawVector(cx, cy, jhat[0], jhat[1], '#a78bfa', 'ĵ');
+    }
+
+    function drawVector(x0, y0, x1, y1, color, label) {
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2.5;
+
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+
+      const angle = Math.atan2(y1 - y0, x1 - x0);
+      const headlen = 8;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 - headlen * Math.cos(angle - Math.PI / 6), y1 - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x1 - headlen * Math.cos(angle + Math.PI / 6), y1 - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.font = 'bold 12px Segoe UI, sans-serif';
+      ctx.fillText(label, x1 + 6, y1 - 4);
+    }
+
+    function resetSim() {
+      sliderRot.value = 0;
+      sliderScale.value = 1.0;
+      sliderShear.value = 0.0;
+      drawGridAndTransform();
+    }
+
+    sliderRot.addEventListener('input', drawGridAndTransform);
+    sliderScale.addEventListener('input', drawGridAndTransform);
+    sliderShear.addEventListener('input', drawGridAndTransform);
+
+    drawGridAndTransform();
+    updateSlide(0);
+  </script>
+</body>
+</html>
