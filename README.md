@@ -45,7 +45,6 @@ aljabar-linear/
 └── README.md                                # Indeks & dokumentasi utama repositori
 ```
 
-*(Catatan: Kumpulan file PDF materi referensi ajar dari STEI ITB disimpan secara lokal sebagai acuan pengampu).*
 
 ---
 
