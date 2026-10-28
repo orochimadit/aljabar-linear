@@ -1,129 +1,96 @@
-# Matematika 2 / Aljabar Linier dan Geometri
+# Matematika 2: Aljabar Linier & Geometri
 
-**Universitas Nahdlatul Ulama Kalimantan Barat (UNU Kalbar)**  
-**Dosen Pengampu:** Aditya Pratama  
-*Referensi Akademis Utama:* Rinaldi Munir dkk. (STEI ITB) & Howard Anton (*Elementary Linear Algebra*).
+<p align="center">
+  <img src="logo_unukalbar.png" alt="Logo UNU Kalbar" width="120">
+</p>
+
+<p align="center">
+  <strong>Universitas Nahdlatul Ulama Kalimantan Barat (UNU Kalbar)</strong><br>
+  <strong>Dosen Pengampu:</strong> Aditya Pratama<br>
+  <em>Referensi Materi Akademis:</em> Rinaldi Munir (STEI ITB) & Howard Anton (<em>Elementary Linear Algebra</em>)
+</p>
 
 ---
 
-## 📁 Struktur Direktori
+## 📖 Tentang Repositori
+Repositori ini memuat perangkat ajar lengkap untuk mata kuliah **Matematika 2 (Aljabar Linier & Geometri)** pada program studi bidang teknologi informasi di **Universitas Nahdlatul Ulama Kalimantan Barat**.
+
+Materi difokuskan pada pemahaman matematis intuitif yang dipadukan dengan implementasi komputasi praktis: Grafika Komputer, Kecerdasan Buatan (AI/LLM), Sistem Temu Balik Informasi (*Search Engine*), dan Komputasi Numerik.
+
+---
+
+## 📁 Struktur Repositori
 
 ```text
-Matematika 2 - Aljabar Linear/
+aljabar-linear/
 │
-├── 00_Silabus_dan_Informasi/
-│   ├── Info-Algeo-2026.pdf                 # Informasi silabus, bobot nilai, aturan perkuliahan
-│   └── RencanaKuliah2026.pdf               # Jadwal per minggu & topik pertemuan semester 1
+├── 04_Slide_HTML/                           # Slide Presentasi Interaktif Berbasis Web
+│   ├── index.html                           # Portal peluncur materi perkuliahan
+│   ├── slide_algeo00_pengantar.html         # Slide Algeo 00 (Pengantar, Aplikasi AI, Live Canvas, Latihan)
+│   ├── slide_algeo02_matriks_eselon.html    # Slide Algeo 02 (1 Utama, Sifat REF, RREF, Simulator OBE)
+│   └── assets/                              # Aset logo dan video animasi tersemat
 │
-├── 01_Materi_Slide/
-│   ├── Algeo-00-Pengantar-Aljabar-Geometri-(2026).pdf
-│   ├── Algeo-01-Review-Matriks-2025.pdf
-│   ├── Algeo-02-Matriks-Eselon-2025.pdf
-│   ├── Algeo-03-Sistem-Persamaan-Linier-2025.pdf
-│   ├── Algeo-04-Tiga-Kemungkinan-Solusi-SPL-2025.pdf
-│   ├── Algeo-05-Sistem-Persamaan-Linier-2-2025.pdf
-│   ├── Algeo-06-Aplikasi-SPL-1-2025.pdf
-│   ├── Algeo-07-Aplikasi-SPL-2-2025.pdf
-│   ├── Algeo-08-Determinan-bagian1-2025.pdf
-│   ├── Algeo-09-Determinan-bagian2-2025.pdf
-│   ├── Algeo-10-Pengantar-Pemrograman-dengan-Bahasa-Java-2026.pdf
-│   ├── Algeo-11-Vektor-di-Ruang-Euclidean-Bag1-2025.pdf
-│   ├── Algeo-12-Vektor-di-Ruang-Euclidean-Bag2-2025.pdf
-│   ├── Algeo-13-Vektor-di-Ruang-Euclidean-Bag3-2025.pdf
-│   ├── Algeo-14-Aplikasi-dot-product-pada-IR-2025.pdf
-│   ├── Algeo-15-Ruang-vektor-umum-Bagian1-2025.pdf
-│   ├── Algeo-16-Ruang-vektor-umum-Bagian2-2025.pdf
-│   ├── Algeo-17-Ruang-vektor-umum-Bagian3-2025.pdf
-│   ├── Algeo-18-Ruang-vektor-umum-Bagian4-2025.pdf
-│   ├── Algeo-19-Nilai-Eigen-dan-Vektor-Eigen-Bagian1-2025.pdf
-│   ├── Algeo-20-Nilai-Eigen-dan-Vektor-Eigen-Bagian2-2025.pdf
-│   ├── Algeo-21-Singular-value-decomposition-Bagian1-2025.pdf
-│   ├── Algeo-22-Singular-value-decomposition-Bagian2-2025.pdf
-│   ├── Algeo-23-Dekomposisi-LU-2025.pdf
-│   └── Algeo-24-Dekomposisi-QR-2025.pdf
+├── 05_Animasi_Manim/                        # Animasi Matematis Video (Engine Manim - 3Blue1Brown)
+│   ├── PANDUAN_MANIM.md                     # Panduan setup FFmpeg, Manim, dan perintah render
+│   ├── transformasi_geometri_2d.py          # Animasi grid transformasi linier 2D
+│   ├── matriks_eselon_obe.py                # Animasi tahapan eliminasi OBE dan 1 utama (REF & RREF)
+│   ├── cosine_similarity_ir.py              # Animasi visualisasi vektor kueri & dokumen pada IR
+│   ├── AnimasiTransformasi2D.mp4            # Hasil render video animasi transformasi 2D
+│   └── AnimasiMatriksEselon.mp4             # Hasil render video animasi matriks eselon OBE
 │
-├── 02_Kuis_dan_Ujian/
-│   ├── Kuis-1-IF2123-2026.pdf               # Kuis SPL & Determinan
-│   ├── Solusi-Kuis-1-IF2123-2026.pdf        # Pembahasan Kuis 1
-│   ├── Kuis-2-IF2123-2026.pdf               # Kuis Vektor Euclidean & Ruang Vektor
-│   ├── Solusi-Kuis-2-IF2123-2026.pdf        # Pembahasan Kuis 2
-│   ├── UTS-IF2123-Algeo-2025 (Referensi Latihan).pdf
-│   ├── Solusi-UTS-IF2123-Algeo-2025 (Referensi Latihan).pdf
-│   └── UTS-IF2123-Algeo-2024 (Referensi Latihan).pdf
-│
-├── 03_Tugas_Besar/
-│   └── Tubes1-Algeo-2026.pdf                # Spesifikasi Tubes 1 (SPL, Determinan, Spline, Java)
-│
-├── 04_Slide_HTML/
-│   ├── index.html                           # Portal peluncur slide presentasi interaktif
-│   ├── slide_algeo00_pengantar.html         # Slide Algeo 00 (Pengantar, Aplikasi IT, Live Canvas, Contoh Latihan)
-│   └── slide_algeo02_matriks_eselon.html    # Slide Algeo 02 (1 Utama, Sifat REF, RREF, Simulator OBE, Latihan 8 Matriks)
-│
-├── 05_Animasi_Manim/
-│   ├── PANDUAN_MANIM.md                     # Panduan instalasi FFmpeg, Manim, dan perintah render
-│   ├── transformasi_geometri_2d.py          # Animasi grid transformasi linier 2D gaya 3Blue1Brown
-│   ├── matriks_eselon_obe.py                # Animasi tahapan eliminasi OBE dan 1 utama menuju REF & RREF
-│   └── cosine_similarity_ir.py              # Animasi visualisasi vektor kueri & dokumen pada IR System
-│
-├── simulasi_algeo_interaktif.py             # Aplikasi GUI simulasi Python desktop (Tkinter + Matplotlib)
-├── LEMBAR_LATIHAN_DAN_PEMBAHASAN.md         # Lembar soal latihan mandiri & pembahasan lengkap per bab
-├── PANDUAN_DAN_RANGKUMAN_MATERI.md          # Rangkuman konsep, rumus, dan algoritma penting
-└── README.md                                # Dokumen indeks ini
+├── simulasi_algeo_interaktif.py             # Aplikasi GUI Desktop Python (Tkinter + Matplotlib + NumPy)
+├── LEMBAR_LATIHAN_DAN_PEMBAHASAN.md         # Bank soal latihan mahasiswa + kunci jawaban terperinci
+├── PANDUAN_DAN_RANGKUMAN_MATERI.md          # Rangkuman konsep 8 bab kurikulum satu semester
+├── logo_unukalbar.png                       # Berkas logo resmi UNU Kalbar
+└── README.md                                # Indeks & dokumentasi utama repositori
 ```
+
+*(Catatan: Kumpulan file PDF materi referensi ajar dari STEI ITB disimpan secara lokal sebagai acuan pengampu).*
 
 ---
 
-## 🐍 Cara Menjalankan Aplikasi Simulasi Python
+## 🎯 Komponen Materi Pembelajaran
 
-Buka terminal / PowerShell di folder ini, lalu jalankan:
+### 1. Slide Presentasi Web Interaktif (`04_Slide_HTML/`)
+Slide perkuliahan modern tanpa memerlukan server khusus, cukup klik dua kali pada file HTML:
+* **`index.html`**: Halaman depan untuk memilih modul presentasi.
+* **`slide_algeo00_pengantar.html`**:
+  * Motivasi mengapa mahasiswa IT wajib belajar aljabar linier.
+  * 6 Pilar aplikasi nyata: Grafika 3D, Mesin Pencari, Visi Komputer, Game Quaternion, AI/LLM, dan Kuantum.
+  * **Live Interactive Canvas**: Slider rotasi, skala, dan geseran (*shear*) yang mengubah arah vektor basis $\hat{i}$ dan $\hat{j}$ secara real-time di browser.
+  * Contoh latihan perhitungan *Cosine Similarity* dan transformasi matriks titik grafika.
+* **`slide_algeo02_matriks_eselon.html`**:
+  * Konsep 1 Utama (*leading 1*), 3 Sifat Matriks Eselon Baris (REF), dan Sifat ke-4 Eselon Baris Tereduksi (RREF).
+  * **Simulator Langkah OBE Live**: Tombol interaktif untuk melihat matriks acak tereliminasi baris demi baris.
+  * Latihan identifikasi 8 matriks klasik dan kuis interaktif kelas.
+
+### 2. Animasi Manim Video MP4 (`05_Animasi_Manim/`)
+Animasi matematis beresolusi tinggi yang dibangun menggunakan **Manim** (engine animasi Grant Sanderson / *3Blue1Brown*):
+* **`AnimasiTransformasi2D.mp4`**: Visualisasi perubahan bidang kartesius dan penskalaan luas area determinan.
+* **`AnimasiMatriksEselon.mp4`**: Visualisasi langkah eliminasi matriks, penyorotan pivot hijau, dan pola tangga REF/RREF.
+* Perintah render mandiri:
+  ```bash
+  manim -pql transformasi_geometri_2d.py AnimasiTransformasi2D
+  ```
+
+### 3. Aplikasi Simulasi Python GUI (`simulasi_algeo_interaktif.py`)
+Aplikasi mandiri desktop berbasis Tkinter & Matplotlib dengan 3 tab interaktif:
+* **Tab 1:** Eksplorasi animasi transformasi geometri 2D (interpolasi pergerakan grid halus).
+* **Tab 2:** Solver eliminasi Gauss & Gauss-Jordan tahap demi tahap dengan log keterangan OBE.
+* **Tab 3:** Visualisasi sudut kemiripan kosinus kueri terhadap dokumen pada sistem temu balik informasi (*Information Retrieval*).
+
+Cara menjalankan:
 ```bash
-python "Matematika 2 - Aljabar Linear/simulasi_algeo_interaktif.py"
+python simulasi_algeo_interaktif.py
 ```
-Fitur yang tersedia dalam aplikasi simulasi:
-1. **Tab 1: Animasi Transformasi Geometri 2D** (Visualisasi rotasi, penskalaan, dan geseran vektor basis secara halus).
-2. **Tab 2: Simulator Langkah Eliminasi Gauss & Gauss-Jordan** (Animasi pembentukan 1 Utama dan eliminasi nol bertahap).
-3. **Tab 3: Simulasi Cosine Similarity pada Mesin Pencari** (Eksplorasi sudut kosinus kueri terhadap vektor dokumen).
-│
-├── 03_Tugas_Besar/
-│   └── Tubes1-Algeo-2026.pdf                # Spesifikasi Tubes 1 (SPL, Determinan, Spline, Java)
-│
-├── 04_Slide_HTML/
-│   ├── index.html                           # Portal peluncur slide presentasi interaktif
-│   ├── slide_algeo00_pengantar.html         # Slide Algeo 00 (Pengantar, Aplikasi IT, Roadmap, Tubes)
-│   └── slide_algeo02_matriks_eselon.html    # Slide Algeo 02 (1 Utama, Sifat REF, RREF, Kuis Interaktif)
-│
-├── PANDUAN_DAN_RANGKUMAN_MATERI.md          # Rangkuman konsep, rumus, dan algoritma penting
-└── README.md                                # Dokumen indeks ini
-```
+
+### 4. Lembar Latihan & Rangkuman Materi
+* [**`LEMBAR_LATIHAN_DAN_PEMBAHASAN.md`**](LEMBAR_LATIHAN_DAN_PEMBAHASAN.md): Bahan tugas dan kuis mahasiswa yang memuat soal aplikasi komputasi, identifikasi matriks, serta eliminasi Gauss-Jordan dengan pembahasan matematis langkah demi langkah.
+* [**`PANDUAN_DAN_RANGKUMAN_MATERI.md`**](PANDUAN_DAN_RANGKUMAN_MATERI.md): Silabus rangkuman 8 bab yang mencakup seluruh topik perkuliahan selama 16 minggu.
 
 ---
 
-## 🎯 Ringkasan Komponen Mata Kuliah
-
-1. **Komputasi Matriks & SPL**
-   - Operasi Baris Elementer (OBE)
-   - Eliminasi Gauss & Eliminasi Gauss-Jordan
-   - Tiga kemungkinan solusi SPL: Solusi Unik, Solusi Banyak (parametrik), Tidak Ada Solusi (inkonsisten)
-   - Determinan: Reduksi Baris, Ekspansi Kofaktor
-   - Matriks Balikan (Invers) dengan OBE $[A | I] \to [I | A^{-1}]$ dan Matriks Adjoin.
-
-2. **Ruang Vektor (Vector Spaces)**
-   - Ruang Euclidean $\mathbb{R}^n$ (norma, dot product, sudut, orthogonalitas, proyeksi vektor, cross product)
-   - Ruang Vektor Umum (10 aksioma ruang vektor, subruang)
-   - Kombinasi Linier, Rentang (Span), Bebas Linier (Linear Independence)
-   - Basis dan Dimensi, Ruang Baris, Ruang Kolom, Ruang Nol (Nullspace), Teorema Rank-Nullity
-   - Transformasi Linier dan Representasi Matriks
-
-3. **Spektral & Dekomposisi Matriks Lanjut**
-   - Nilai Eigen & Vektor Eigen, Persamaan Karakteristik $\det(\lambda I - A) = 0$
-   - Diagonalisasi Matriks ($A = P D P^{-1}$) & Diagonalisasi Ortogonal matriks simetris
-   - Singular Value Decomposition (SVD: $A = U \Sigma V^T$) & Kompresi Citra / Reduksi Dimensi
-   - Dekomposisi LU ($A = LU$) dan Solusi SPL Efisien
-   - Dekomposisi QR ($A = QR$) melalui Proses Gram-Schmidt
-
-4. **Aplikasi Nyata di Bidang Informatika**
-   - *Information Retrieval* (Sistem Temu Kembali Informasi menggunakan Cosine Similarity pada model Vector Space)
-   - Interpolasi Polinomial & Natural Cubic Spline Interpolation
-   - Regresi Spline
-   - *Image Inpainting* menggunakan Persamaan Laplace
-   - Jaringan Aliran Listrik (Hukum Kirchhoff) dan Aliran Lalu Lintas
+## 👨‍🏫 Kontak & Pengampu
+* **Dosen Pengampu:** Aditya Pratama
+* **Institusi:** Program Studi Informatika / Sistem Informasi, Universitas Nahdlatul Ulama Kalimantan Barat
+* **Rujukan Akademis:** Rinaldi Munir (STEI ITB) & Howard Anton (*Elementary Linear Algebra*, Wiley)
