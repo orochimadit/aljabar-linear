@@ -1,11 +1,18 @@
 # Python Cache & Bytecode
 __pycache__/
 *.py[cod]
-*$py.class
+*.class
 
 # Manim rendering cache & intermediate video chunks
 05_Animasi_Manim/media/
 media/
+
+# Folder & Berkas PDF Referensi Lokal (Tidak diunggah ke GitHub)
+00_Silabus_dan_Informasi/
+01_Materi_Slide/
+02_Kuis_dan_Ujian/
+03_Tugas_Besar/
+*.pdf
 
 # OS & Editor generated files
 .DS_Store
