@@ -3,288 +3,318 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal perkuliahan Matematika 2 Aljabar Linier dan Geometri Universitas Nahdlatul Ulama Kalimantan Barat oleh Aditya Pratama.">
   <title>Aljabar Linier & Geometri: UNU Kalbar (Aditya Pratama)</title>
   <style>
-    :root {
-      --bg-color: #0b1120;
-      --card-bg: #151e32;
-      --card-border: #24324d;
-      --primary: #10b981;
-      --accent: #38bdf8;
-      --success: #34d399;
-      --warn: #fbbf24;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-    }
+/* Hallmark - genre: modern-minimal | theme: cobalt */
+:root {
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+  --bg-page: oklch(14% 0.02 260);
+  --card-bg: oklch(20% 0.03 255);
+  --card-border: oklch(30% 0.04 255);
+  --primary: oklch(68% 0.17 155);
+  --primary-hover: oklch(62% 0.18 155);
+  --primary-bg: oklch(68% 0.17 155 / 0.12);
+  --primary-border: oklch(68% 0.17 155 / 0.32);
+  --accent: oklch(76% 0.13 220);
+  --accent-hover: oklch(84% 0.11 210);
+  --text-main: oklch(96% 0.01 240);
+  --text-secondary: oklch(84% 0.02 245);
+  --text-muted: oklch(68% 0.03 250);
+  --btn-ink: oklch(12% 0.02 260);
+  --instructor-bg: oklch(22% 0.03 255);
+  --banner-bg: oklch(18% 0.03 255 / 0.95);
+  --banner-border: oklch(68% 0.17 155 / 0.4);
+  --panel-bg: oklch(16% 0.02 260 / 0.6);
+  --code-bg: oklch(24% 0.03 255);
+  --shadow-card: 0 16px 32px oklch(0% 0 0 / 0.4);
+  --shadow-logo: 0 6px 16px oklch(0% 0 0 / 0.45);
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-color);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
+html, body {
+  overflow-x: clip;
+}
 
-    .container {
-      max-width: 960px;
-      width: 100%;
-    }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-page);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 35px;
-    }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 
-    .badge-univ {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(56, 189, 248, 0.12);
-      color: var(--primary);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 6px 16px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      margin-bottom: 14px;
-    }
+a:active, button:active {
+  transform: scale(0.98);
+}
 
-    h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+.container {
+  max-width: 960px;
+  width: 100%;
+}
 
-    p.subtitle {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 780px;
-      margin: 0 auto;
-    }
+.hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
 
-    .instructor-badge {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 6px 18px;
-      background: #1e293b;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      color: #e2e8f0;
-      font-size: 0.95rem;
-    }
-    .instructor-badge strong {
-      color: var(--primary);
-    }
+.hero-logo-box {
+  margin-bottom: 16px;
+}
 
-    /* Grid Slide Decks */
-    .deck-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      margin-top: 25px;
-    }
+.hero-logo {
+  height: 100px;
+  filter: drop-shadow(var(--shadow-logo));
+}
 
-    .deck-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.25s ease;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-    }
+.univ-line {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
 
-    .deck-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
-    }
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-main);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
 
-    .deck-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
+p.subtitle {
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 760px;
+  margin: 0 auto;
+}
 
-    .deck-card:hover::before {
-      opacity: 1;
-    }
+.instructor-badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: var(--instructor-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
 
-    .card-top {
-      margin-bottom: 18px;
-    }
+.instructor-badge strong {
+  color: var(--primary);
+}
 
-    .card-code {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 1.2px;
-      margin-bottom: 8px;
-    }
+/* Grid Slide Decks */
+.deck-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
 
-    .card-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
+.deck-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
 
-    .card-desc {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
+.deck-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 16px;
-      border-top: 1px solid var(--card-border);
-    }
+.card-top {
+  margin-bottom: 16px;
+}
 
-    .slide-count {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+.tag-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
 
-    .btn-launch {
-      background: var(--primary);
-      color: #0b1120;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 8px 16px;
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.2s;
-    }
+.tag {
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
 
-    .deck-card:hover .btn-launch {
-      background: #7dd3fc;
-    }
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
 
-    /* Python Simulator Showcase Banner */
-    .python-banner {
-      margin-top: 25px;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-      border: 1px solid rgba(52, 211, 153, 0.4);
-      border-radius: 16px;
-      padding: 24px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
+.card-desc {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
 
-    .py-content h3 {
-      font-size: 1.25rem;
-      color: var(--success);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-border);
+  margin-top: 16px;
+}
 
-    .py-content p {
-      font-size: 0.92rem;
-      color: #cbd5e1;
-      line-height: 1.5;
-    }
+.slide-count {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
 
-    .py-command {
-      margin-top: 8px;
-      background: #0b1120;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-family: Consolas, monospace;
-      color: var(--primary);
-      display: inline-block;
-      font-size: 0.88rem;
-      border: 1px solid var(--card-border);
-    }
+.btn-launch {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--btn-ink);
+  background: var(--primary);
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
 
-    .features-panel {
-      margin-top: 25px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 18px 24px;
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-    }
+.deck-card:hover .btn-launch {
+  background: var(--accent-hover);
+}
 
-    .feature-item {
-      font-size: 0.88rem;
-      color: #cbd5e1;
-    }
-    .feature-item strong {
-      display: block;
-      color: var(--primary);
-      margin-bottom: 4px;
-      font-size: 0.95rem;
-    }
+/* Python Simulation App Banner */
+.python-banner {
+  background: var(--banner-bg);
+  border: 1px solid var(--banner-border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+}
 
-    @media (max-width: 768px) {
-      .deck-grid {
-        grid-template-columns: 1fr;
-      }
-      .python-banner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .features-panel {
-        flex-direction: column;
-        gap: 14px;
-      }
-    }
+.py-content h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+
+.py-content p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.py-command {
+  background: var(--code-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--accent);
+}
+
+/* Features Panel */
+.features-panel {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  background: var(--panel-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.feature-item {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.feature-item strong {
+  display: block;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.kbd-badge {
+  background: var(--code-bg);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 768px) {
+  .deck-grid {
+    grid-template-columns: 1fr;
+  }
+  .features-panel {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
   </style>
 </head>
 <body>
 
   <div class="container">
     <div class="hero">
-      <div style="margin-bottom: 14px;">
-        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" style="height: 100px; filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));">
-      </div>
-      <div class="badge-univ">
-        <span>UNIVERSITAS NAHDLATUL ULAMA KALIMANTAN BARAT (UNU KALBAR)</span>
+      <div class="hero-logo-box">
+        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" class="hero-logo">
       </div>
       <h1>Matematika 2: Aljabar Linier & Geometri</h1>
+      <p class="univ-line">Universitas Nahdlatul Ulama Kalimantan Barat</p>
       <p class="subtitle">
-        Slide perkuliahan interaktif modern berbasis web yang diparafrase dan diselaraskan untuk kurikulum komputasi praktis, dilengkapi simulasi animasi matematika dan notasi KaTeX.
+        Slide perkuliahan interaktif berbasis web untuk kurikulum komputasi praktis, dilengkapi simulasi animasi matematika dan notasi KaTeX.
       </p>
       <div class="instructor-badge">
-        Dosen Pengampu: <strong>Aditya Pratama</strong> &nbsp;•&nbsp; 
+        Dosen Pengampu: <strong>Aditya Pratama</strong> &nbsp;|&nbsp; 
         Referensi Utama: <em>Rinaldi Munir (STEI ITB) & Howard Anton</em>
       </div>
     </div>
@@ -294,14 +324,18 @@
       <!-- Deck 1 -->
       <a href="slide_algeo00_pengantar.html" class="deck-card">
         <div class="card-top">
-          <div class="card-code">ALGEO 00 • 12 SLIDES • LIVE CANVAS & LATIHAN IR</div>
+          <div class="tag-list">
+            <span class="tag">Algeo 00</span>
+            <span class="tag">12 Slides</span>
+            <span class="tag">Live Canvas</span>
+          </div>
           <div class="card-title">Pengantar Aljabar Linier & Geometri Komputasi</div>
           <div class="card-desc">
-            Motivasi pentingnya aljabar linier bagi mahasiswa informatika UNU Kalbar, 6 pilar aplikasi riil (Grafika 3D, Vector Space Model IR, Face Recognition, Quaternion Game, LLM / AI, Quantum), simulasi interaktif rotasi matriks 2D di browser, serta <strong>contoh latihan perhitungan Cosine Similarity & transformasi matriks</strong>.
+            Pentingnya aljabar linier bagi mahasiswa informatika UNU Kalbar, 6 pilar aplikasi riil (Grafika 3D, Vector Space Model IR, Face Recognition, Quaternion Game, LLM / AI, Quantum), simulasi interaktif rotasi matriks 2D di browser, serta contoh latihan perhitungan Cosine Similarity & transformasi matriks.
           </div>
         </div>
         <div class="card-footer">
-          <span class="slide-count">⏱ Estimasi: 45 - 55 menit</span>
+          <span class="slide-count">Estimasi: 45 - 55 menit</span>
           <span class="btn-launch">Buka Materi</span>
         </div>
       </a>
@@ -309,14 +343,18 @@
       <!-- Deck 2 -->
       <a href="slide_algeo02_matriks_eselon.html" class="deck-card">
         <div class="card-top">
-          <div class="card-code">ALGEO 02 • 11 SLIDES • SIMULATOR OBE & LATIHAN 8 MATRIKS</div>
+          <div class="tag-list">
+            <span class="tag">Algeo 02</span>
+            <span class="tag">11 Slides</span>
+            <span class="tag">Simulator OBE</span>
+          </div>
           <div class="card-title">Matriks Eselon: Konsep REF & RREF</div>
           <div class="card-desc">
-            Konsep 1 Utama (Leading 1), 3 Sifat Matriks Eselon Baris (REF), Sifat ke-4 Eselon Baris Tereduksi (RREF), simulator langkah demi langkah Operasi Baris Elementer (OBE) langsung di slide, serta <strong>koleksi latihan identifikasi 8 matriks (Howard Anton) dan reduksi matriks bertahap</strong>.
+            Konsep 1 Utama (Leading 1), 3 Sifat Matriks Eselon Baris (REF), Sifat ke-4 Eselon Baris Tereduksi (RREF), simulator langkah demi langkah Operasi Baris Elementer (OBE) langsung di slide, serta koleksi latihan identifikasi 8 matriks dan reduksi bertahap.
           </div>
         </div>
         <div class="card-footer">
-          <span class="slide-count">⏱ Estimasi: 50 - 65 menit</span>
+          <span class="slide-count">Estimasi: 50 - 65 menit</span>
           <span class="btn-launch">Buka Materi</span>
         </div>
       </a>
@@ -325,12 +363,12 @@
     <!-- Python Simulation App Banner -->
     <div class="python-banner">
       <div class="py-content">
-        <h3>Aplikasi Simulasi & Visualisasi Python (Desktop GUI)</h3>
+        <h2>Aplikasi Simulasi & Visualisasi Python (Desktop GUI)</h2>
         <p>
-          Tersedia aplikasi desktop mandiri berbasis Python (Tkinter + Matplotlib + NumPy) untuk mendemonstrasikan animasi transformasi geometri 2D, proses OBE step-by-step, dan Cosine Similarity pada proyektor kelas:
+          Tersedia aplikasi desktop mandiri berbasis Python (Tkinter + Matplotlib + NumPy) untuk mendemonstrasikan animasi transformasi geometri 2D, proses OBE bertahap, dan Cosine Similarity pada proyektor kelas:
         </p>
         <div class="py-command">
-          python "Matematika 2 - Aljabar Linear\simulasi_algeo_interaktif.py"
+          python simulasi_algeo_interaktif.py
         </div>
       </div>
     </div>
@@ -339,15 +377,15 @@
     <div class="features-panel">
       <div class="feature-item">
         <strong>Navigasi Keyboard</strong>
-        Gunakan tombol <code style="background:#334155; padding:2px 6px; border-radius:4px;">→</code> / <code style="background:#334155; padding:2px 6px; border-radius:4px;">Spasi</code> untuk maju dan <code style="background:#334155; padding:2px 6px; border-radius:4px;">←</code> untuk mundur
+        Gunakan tombol <code class="kbd-badge">Spasi</code> untuk maju dan <code class="kbd-badge">Backspace</code> untuk mundur.
       </div>
       <div class="feature-item">
         <strong>Mode Layar Penuh Proyektor</strong>
-        Tekan tombol <code style="background:#334155; padding:2px 6px; border-radius:4px;">F</code> untuk presentasi layar penuh di ruang kuliah
+        Tekan tombol <code class="kbd-badge">F</code> untuk presentasi layar penuh di ruang kuliah.
       </div>
       <div class="feature-item">
         <strong>Simulator Komputasi Interaktif</strong>
-        Dilengkapi visualisasi animasi matriks langsung di browser tanpa perlu server
+        Dilengkapi visualisasi animasi matriks langsung di browser tanpa perlu server tambahan.
       </div>
     </div>
   </div>

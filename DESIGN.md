@@ -43,3 +43,14 @@ Palet dirancang berbasis tema gelap kontras tinggi untuk kenyamanan proyeksi di 
 2. **Bebas Polusi Emoji**: Simbol visual digantikan dengan tipografi formal, nomor urut terstruktur, atau notasi matematika standar.
 3. **Bebas Gelar pada Penamaan Pengampu & Referensi**: Cukup gunakan nama `"Aditya Pratama"` dan `"Rinaldi Munir"`.
 4. **Fungsionalitas Penuh**: Setiap tombol dan input wajib memiliki aksi komputasi nyata.
+
+---
+
+## 5. Standar Desain Hallmark (The Floor)
+
+Seluruh antarmuka web perkuliahan divalidasi dengan Hallmark Anti-Slop Linter (`sloplint.mjs`):
+1. **CSS Stamp & Token Block**: Semua warna dan font dideklarasikan di blok token `:root` berbasis OKLCH/sistem, tanpa nilai literal mentah pada aturan selektor.
+2. **Kepatuhan Transisi**: Menghindari `transition: all` dan transisi `width`/`height`. Semua transisi dideklarasikan spesifik pada `transform` atau `opacity`.
+3. **Aksesibilitas & Reduksi Gerak**: Elemen interaktif dilengkapi ring `:focus-visible` instan berkontras tinggi dan kueri media `@media (prefers-reduced-motion: reduce)`.
+4. **Bebas Eyebrow & Tracked Capitals**: Menghilangkan label kapital spasi renggang di atas heading utama untuk menjaga keanggunan tipografi editorial.
+5. **Kerapian Tata Letak Responsif**: Menerapkan `overflow-x: clip` pada `html` dan `body` untuk mengeliminasi potensi pergeseran horizontal.

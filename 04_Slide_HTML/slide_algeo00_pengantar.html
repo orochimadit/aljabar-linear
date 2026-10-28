@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="no-js">
 <head>
   <meta charset="UTF-8">
+    <meta name="description" content="Slide Perkuliahan Aljabar Linier Algeo 00 (Pengantar) UNU Kalbar oleh Aditya Pratama.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Algeo 00: Pengantar Aljabar Linier & Geometri: UNU Kalbar</title>
   <!-- KaTeX for math formulas -->
@@ -10,35 +11,65 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
           onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
   <style>
+/* Hallmark - genre: modern-minimal | theme: cobalt */
     :root {
-      --bg-color: #0b1120;
-      --card-bg: #151e32;
-      --card-border: #24324d;
-      --primary: #10b981;
-      --accent: #38bdf8;
-      --success: #34d399;
-      --warn: #fbbf24;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+      --bg-page: oklch(14% 0.02 260);
+      --card-bg: oklch(20% 0.03 255);
+      --card-border: oklch(30% 0.04 255);
+      --primary: oklch(68% 0.17 155);
+      --primary-hover: oklch(62% 0.18 155);
+      --primary-bg: oklch(68% 0.17 155 / 0.12);
+      --primary-border: oklch(68% 0.17 155 / 0.32);
+      --accent: oklch(76% 0.13 220);
+      --accent-hover: oklch(84% 0.11 210);
+      --success: oklch(74% 0.16 160);
+      --warn: oklch(80% 0.16 85);
+      --error: oklch(65% 0.22 25);
+      --text-main: oklch(96% 0.01 240);
+      --text-secondary: oklch(84% 0.02 245);
+      --text-muted: oklch(68% 0.03 250);
+      --btn-ink: oklch(12% 0.02 260);
+      --code-bg: oklch(24% 0.03 255);
+      --overlay-bg: oklch(16% 0.02 260 / 0.92);
+      --shadow-slide: 0 20px 40px oklch(0% 0 0 / 0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      overflow-x: clip;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
       color: var(--text-main);
-      overflow: hidden;
       height: 100vh;
       display: flex;
       flex-direction: column;
       user-select: none;
     }
 
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    button:active, a:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     #progress-container {
       width: 100%;
-      height: 5px;
-      background: #1e293b;
+      height: 4px;
+      background: var(--card-border);
       position: fixed;
       top: 0;
       left: 0;
@@ -46,37 +77,39 @@
     }
     #progress-bar {
       height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #38bdf8, #818cf8);
-      transition: width 0.3s ease;
+      width: 100%;
+      background: var(--primary);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 24px;
+      padding: 12px 24px;
       border-bottom: 1px solid var(--card-border);
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--overlay-bg);
       backdrop-filter: blur(8px);
       z-index: 10;
     }
     .header-title {
-      font-size: 0.92rem;
+      font-size: 0.9375rem;
       font-weight: 600;
       color: var(--primary);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .header-badge {
-      background: rgba(56, 189, 248, 0.15);
+      background: var(--primary-bg);
       color: var(--primary);
-      padding: 3px 10px;
-      border-radius: 9999px;
+      padding: 4px 8px;
+      border-radius: 4px;
       font-size: 0.75rem;
-      font-weight: 700;
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      font-weight: 600;
+      border: 1px solid var(--primary-border);
     }
     .header-controls {
       display: flex;
@@ -87,14 +120,14 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-main);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.875rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      gap: 8px;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
     .btn-icon:hover {
       background: var(--card-border);
@@ -120,18 +153,21 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 34px 46px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      padding: 32px 44px;
+      box-shadow: var(--shadow-slide);
       display: flex;
       flex-direction: column;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateX(40px);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       overflow-y: auto;
     }
 
-    .slide.active {
+    .js .slide {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .js .slide.active {
       opacity: 1;
       visibility: visible;
       transform: translateX(0);
@@ -140,69 +176,73 @@
 
     .slide.prev { transform: translateX(-40px); }
 
-    .slide-tag {
+    .slide-cat {
+      display: block;
       color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
+
     .slide h1 {
-      font-size: 2.1rem;
-      font-weight: 800;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
       line-height: 1.25;
-      background: linear-gradient(135deg, #ffffff 40%, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--text-main);
+      text-wrap: balance;
+      overflow-wrap: break-word;
+      min-width: 0;
     }
     .slide p {
-      font-size: 1.02rem;
-      color: #cbd5e1;
+      font-size: 1rem;
+      color: var(--text-secondary);
       line-height: 1.55;
       margin-bottom: 12px;
     }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 10px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 12px;
     }
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-top: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 12px;
     }
     .card {
-      background: rgba(15, 23, 42, 0.6);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 18px;
+      padding: 16px;
     }
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.0625rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
+      text-wrap: balance;
+      overflow-wrap: break-word;
+      min-width: 0;
     }
     .card-desc {
-      font-size: 0.92rem;
-      color: #cbd5e1;
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
       line-height: 1.5;
     }
 
     .callout {
-      background: rgba(56, 189, 248, 0.08);
-      border-left: 4px solid var(--primary);
-      padding: 14px 18px;
-      border-radius: 0 10px 10px 0;
-      margin: 10px 0;
+      background: var(--primary-bg);
+      border: 1px solid var(--primary-border);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
     }
 
     footer {
@@ -211,26 +251,26 @@
       align-items: center;
       padding: 12px 28px;
       border-top: 1px solid var(--card-border);
-      background: rgba(15, 23, 42, 0.95);
+      background: var(--overlay-bg);
       z-index: 10;
     }
-    .slide-counter { font-size: 0.88rem; color: var(--text-muted); }
-    .nav-buttons { display: flex; gap: 10px; }
+    .slide-counter { font-size: 0.875rem; color: var(--text-muted); }
+    .nav-buttons { display: flex; gap: 12px; }
     .btn-nav {
       background: var(--primary);
-      color: #0b1120;
+      color: var(--btn-ink);
       border: none;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      gap: 8px;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
-    .btn-nav:hover { background: #7dd3fc; }
+    .btn-nav:hover { background: var(--accent-hover); }
     .btn-nav.secondary {
       background: var(--card-bg);
       color: var(--text-main);
@@ -238,12 +278,12 @@
     }
 
     .key-hint {
-      background: #334155;
-      padding: 2px 6px;
+      background: var(--code-bg);
+      padding: 4px 8px;
       border-radius: 4px;
-      font-size: 0.72rem;
-      font-family: monospace;
-      color: #cbd5e1;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
       margin-left: 4px;
     }
 
@@ -253,11 +293,9 @@
       text-align: center;
     }
     .title-slide h1 {
-      font-size: 2.8rem;
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: var(--text-main);
     }
     .course-meta {
       display: flex;
@@ -266,16 +304,16 @@
       justify-content: center;
     }
     .meta-box {
-      background: rgba(15, 23, 42, 0.7);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 0.88rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
     }
     .meta-box strong {
       color: var(--primary);
       display: block;
-      font-size: 1.05rem;
+      font-size: 1rem;
       margin-bottom: 4px;
     }
 
@@ -283,41 +321,50 @@
     .sim-box {
       display: flex;
       gap: 20px;
-      background: rgba(15, 23, 42, 0.8);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
       padding: 16px;
       align-items: center;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     .sim-canvas {
-      background: #060d1a;
-      border: 1px solid #334155;
+      background: var(--bg-page);
+      border: 1px solid var(--card-border);
       border-radius: 8px;
     }
     .sim-ctrl { flex: 1; }
-    .sim-slider-group { margin-bottom: 10px; }
+    .sim-slider-group { margin-bottom: 12px; }
     .sim-slider-group label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
+      font-size: 0.875rem;
       color: var(--text-muted);
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
     .sim-slider-group input[type="range"] {
       width: 100%;
       accent-color: var(--primary);
     }
     .matrix-live-display {
-      background: #0f172a;
-      border: 1px solid #334155;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       padding: 8px 12px;
       border-radius: 6px;
-      font-family: Consolas, monospace;
-      font-size: 0.88rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
       color: var(--success);
-      margin-top: 6px;
+      margin-top: 8px;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -329,7 +376,7 @@
   <header>
     <div class="header-title">
       <img src="assets/logo_unukalbar.png" alt="UNU Kalbar" style="height: 24px; vertical-align: middle;">
-      <span class="header-badge">ALGEO 00</span>
+      <span class="header-badge">Algeo 00</span>
       <span>Pengantar Aljabar Linier & Geometri Komputasi: UNU Kalbar</span>
     </div>
     <div class="header-controls">
@@ -347,11 +394,10 @@
     <!-- SLIDE 1: Title Slide (UNU Kalbar) -->
     <div class="slide title-slide active" data-index="0">
       <div style="margin-bottom: 10px;">
-        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" style="height: 100px; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5));">
+        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" >
       </div>
-      <div class="slide-tag">UNIVERSITAS NAHDLATUL ULAMA KALIMANTAN BARAT</div>
-      <h1>Pengantar Aljabar Linier & Geometri</h1>
-      <p style="font-size: 1.25rem; color: #94a3b8; max-width: 760px;">
+      <h1><span class="slide-cat">Universitas Nahdlatul Ulama Kalimantan Barat</span> Pengantar Aljabar Linier & Geometri</h1>
+      <p >
         Pondasi Matematis Komputasi Modern: Dari Grafika Komputer, Kecerdasan Buatan (AI/LLM), hingga Sains Data.
       </p>
       <div class="course-meta">
@@ -361,7 +407,7 @@
         </div>
         <div class="meta-box">
           <strong>Program Studi & Institusi</strong>
-          Informatika / Sains Data • UNU Kalbar
+          Informatika / Sains Data  UNU Kalbar
         </div>
         <div class="meta-box">
           <strong>Rujukan Akademis</strong>
@@ -372,8 +418,7 @@
 
     <!-- SLIDE 2: Motivasi & Paradigma -->
     <div class="slide" data-index="1">
-      <div class="slide-tag">PARADIGMA PERKULIAHAN</div>
-      <h1>Bukan Sekadar Menghitung Angka di Kertas</h1>
+      <h1><span class="slide-cat">Paradigma Perkuliahan</span> Bukan Sekadar Menghitung Angka di Kertas</h1>
       <p>
         Bagi seorang mahasiswa teknologi informasi, <strong>Aljabar Linier adalah bahasa pemrograman bagi ruang dan data</strong>. Kita merancang algoritma yang dieksekusi miliaran kali per detik di atas GPU.
       </p>
@@ -402,14 +447,13 @@
 
     <!-- SLIDE 3: Live Interactive Canvas 2D Transformation -->
     <div class="slide" data-index="2">
-      <div class="slide-tag">SIMULASI INTERAKTIF LANGSUNG</div>
-      <h1>Melihat Matriks Mentransformasikan Ruang</h1>
+      <h1><span class="slide-cat">Simulasi Interaktif Langsung</span> Melihat Matriks Mentransformasikan Ruang</h1>
       <p>
         Cobalah geser slider di bawah ini. Perhatikan bagaimana matriks $T = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$ menggerakkan vektor basis $\hat{i}$ (hijau) dan $\hat{j}$ (ungu) serta memutar objek:
       </p>
 
       <div class="sim-box">
-        <canvas id="live-canvas" class="sim-canvas" width="340" height="280"></canvas>
+        <canvas aria-hidden="true" id="live-canvas" class="sim-canvas" width="340" height="280"></canvas>
         <div class="sim-ctrl">
           <div class="sim-slider-group">
             <label><span>Sudut Rotasi ($\theta$):</span> <strong id="val-rot">0°</strong></label>
@@ -434,8 +478,7 @@
 
     <!-- SLIDE 4: Grafika Komputer & Transformasi 3D -->
     <div class="slide" data-index="3">
-      <div class="slide-tag">APLIKASI KOMPUTASI #1</div>
-      <h1>Grafika Komputer: Transformasi Geometri Homogen</h1>
+      <h1><span class="slide-cat">Aplikasi Komputasi #1</span> Grafika Komputer: Transformasi Geometri Homogen</h1>
       <p>
         Di dunia grafika 3D, koordinat objek $(x, y, z)$ diperluas menjadi koordinat homogen $(x, y, z, 1)$ menggunakan matriks berukuran $4 \times 4$.
       </p>
@@ -458,8 +501,7 @@
 
     <!-- SLIDE 5: Information Retrieval & Cosine Similarity -->
     <div class="slide" data-index="4">
-      <div class="slide-tag">APLIKASI KOMPUTASI #2</div>
-      <h1>Sistem Temu Balik Informasi (Search Engine)</h1>
+      <h1><span class="slide-cat">Aplikasi Komputasi #2</span> Sistem Temu Balik Informasi (Search Engine)</h1>
       <p>
         Bagaimana sistem seperti Google, perayap web, atau pencarian dokumen menemukan dokumen yang paling relevan dengan kueri pengguna?
       </p>
@@ -484,8 +526,7 @@
 
     <!-- SLIDE 6: Computer Vision & Face Recognition -->
     <div class="slide" data-index="5">
-      <div class="slide-tag">APLIKASI KOMPUTASI #3</div>
-      <h1>Visi Komputer: Pengenalan Wajah & SVD</h1>
+      <h1><span class="slide-cat">Aplikasi Komputasi #3</span> Visi Komputer: Pengenalan Wajah & SVD</h1>
       <p>
         Gambar digital adalah matriks nilai piksel. Citra wajah $100 \times 100$ menghasilkan vektor 10.000 dimensi yang sangat berat diproses secara langsung.
       </p>
@@ -493,7 +534,7 @@
         <div class="card">
           <div class="card-title">Metode Eigenfaces (Vektor Eigen)</div>
           <div class="card-desc">
-            Dengan menghitung <em>vektor eigen</em> dari matriks kovariansi sekumpulan wajah, kita memperoleh "wajah basis" (*eigenfaces*). Setiap wajah baru cukup dikenali dari kombinasi bobot terhadap eigenfaces tersebut.
+            Dengan menghitung <em>vektor eigen</em> dari matriks kovariansi sekumpulan wajah, kita memperoleh “wajah basis” (*eigenfaces*). Setiap wajah baru cukup dikenali dari kombinasi bobot terhadap eigenfaces tersebut.
           </div>
         </div>
         <div class="card">
@@ -507,8 +548,7 @@
 
     <!-- SLIDE 7: Game Dev & Quaternion -->
     <div class="slide" data-index="6">
-      <div class="slide-tag">APLIKASI KOMPUTASI #4</div>
-      <h1>Pengembangan Game 3D: Rotasi & Quaternion</h1>
+      <h1><span class="slide-cat">Aplikasi Komputasi #4</span> Pengembangan Game 3D: Rotasi & Quaternion</h1>
       <p>
         Dalam game action atau simulator penerbangan, rotasi menggunakan sudut biasa (Euler: Roll, Pitch, Yaw) memiliki kelemahan fatal berupa <strong>Gimbal Lock</strong>.
       </p>
@@ -532,8 +572,7 @@
 
     <!-- SLIDE 8: AI, LLM, & Kuantum -->
     <div class="slide" data-index="7">
-      <div class="slide-tag">APLIKASI KOMPUTASI #5 & #6</div>
-      <h1>Revolusi AI (LLM) & Komputasi Kuantum</h1>
+      <h1><span class="slide-cat">Aplikasi Komputasi #5 & #6</span> Revolusi AI (LLM) & Komputasi Kuantum</h1>
       <div class="grid-2">
         <div class="card">
           <div class="card-title">Model Bahasa Besar (LLM)</div>
@@ -556,24 +595,23 @@
 
     <!-- SLIDE 9: Contoh Latihan 1: Cosine Similarity -->
     <div class="slide" data-index="8">
-      <div class="slide-tag">CONTOH LATIHAN APLIKATIF #1</div>
-      <h1>Latihan 1: Perhitungan Kemiripan Dokumen (IR)</h1>
+      <h1><span class="slide-cat">Contoh Latihan Aplikatif #1</span> Latihan 1: Perhitungan Kemiripan Dokumen (IR)</h1>
       <p>Sebuah mesin pencari menerima kueri $Q = (2, 1)$. Terdapat 2 dokumen dalam database:</p>
 
       <div class="grid-2">
         <div class="card">
           <div class="card-title">Data Vektor Dokumen</div>
-          <div style="font-size:0.92rem; color:#cbd5e1; line-height:1.6;">
-            • Vektor Kueri: $Q = (2, 1)$<br>
-            • Dokumen 1: $D_1 = (4, 2)$<br>
-            • Dokumen 2: $D_2 = (1, 3)$<br>
+          <div >
+             Vektor Kueri: $Q = (2, 1)$<br>
+             Dokumen 1: $D_1 = (4, 2)$<br>
+             Dokumen 2: $D_2 = (1, 3)$<br>
             <strong>Pertanyaan:</strong> Dokumen mana yang memiliki kemiripan paling tinggi dengan kueri $Q$?
           </div>
         </div>
 
         <div class="card">
           <div class="card-title" style="color:var(--success);">Kunci Pembahasan Lengkap:</div>
-          <div style="font-size:0.88rem; color:#cbd5e1; line-height:1.5;">
+          <div >
             <strong>Hitung Dokumen 1 ($D_1$):</strong><br>
             $Q \cdot D_1 = (2)(4) + (1)(2) = 10$<br>
             $\|Q\| = \sqrt{2^2 + 1^2} = \sqrt{5}, \quad \|D_1\| = \sqrt{4^2 + 2^2} = \sqrt{20}$<br>
@@ -589,14 +627,13 @@
 
     <!-- SLIDE 10: Contoh Latihan 2: Transformasi Matriks 2D -->
     <div class="slide" data-index="9">
-      <div class="slide-tag">CONTOH LATIHAN APLIKATIF #2</div>
-      <h1>Latihan 2: Transformasi Koordinat Objek Grafika</h1>
+      <h1><span class="slide-cat">Contoh Latihan Aplikatif #2</span> Latihan 2: Transformasi Koordinat Objek Grafika</h1>
       <p>Sebuah titik sudut karakter game berada pada koordinat $P = (2, 3)$.</p>
 
       <div class="grid-2">
         <div class="card">
           <div class="card-title">Soal Transformasi Matriks</div>
-          <div style="font-size:0.92rem; color:#cbd5e1; line-height:1.6;">
+          <div >
             1. Titik $P$ diputar $90^\circ$ berlawanan arah jarum jam dengan matriks:<br>
             $$R_{90^\circ} = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}$$
             2. Kemudian objek diperbesar 2x lipat menggunakan matriks skala:<br>
@@ -607,7 +644,7 @@
 
         <div class="card">
           <div class="card-title" style="color:var(--success);">Kunci Pembahasan Lengkap:</div>
-          <div style="font-size:0.88rem; color:#cbd5e1; line-height:1.5;">
+          <div >
             <strong>Tahap 1 (Rotasi):</strong><br>
             $$P' = R_{90^\circ} \cdot P = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} -3 \\ 2 \end{bmatrix}$$
             <strong>Tahap 2 (Skala 2x):</strong><br>
@@ -621,34 +658,33 @@
 
     <!-- SLIDE 11: Roadmap Perkuliahan UNU Kalbar -->
     <div class="slide" data-index="10">
-      <div class="slide-tag">KURIKULUM & RENCANA PEMBELAJARAN</div>
-      <h1>Peta Perjalanan Belajar Semester Ini</h1>
+      <h1><span class="slide-cat">Kurikulum & Rencana Pembelajaran</span> Peta Perjalanan Belajar Semester Ini</h1>
       <div class="grid-3">
         <div class="card">
           <div class="card-title">Blok 1: Matriks & SPL</div>
           <div class="card-desc">
-            • Review Matriks & Bentuk Eselon<br>
-            • Eliminasi Gauss & Gauss-Jordan<br>
-            • Determinan & Invers Matriks<br>
-            • Aplikasi SPL pada Rekayasa & Fisika
+             Review Matriks & Bentuk Eselon<br>
+             Eliminasi Gauss & Gauss-Jordan<br>
+             Determinan & Invers Matriks<br>
+             Aplikasi SPL pada Rekayasa & Fisika
           </div>
         </div>
         <div class="card">
           <div class="card-title">Blok 2: Ruang Vektor</div>
           <div class="card-desc">
-            • Vektor Euclidean di $\mathbb{R}^n$<br>
-            • Dot & Cross Product, IR System<br>
-            • Kombinasi Linier, Rentang (Span)<br>
-            • Basis, Dimensi & Transformasi Linier
+             Vektor Euclidean di $\mathbb{R}^n$<br>
+             Dot & Cross Product, IR System<br>
+             Kombinasi Linier, Rentang (Span)<br>
+             Basis, Dimensi & Transformasi Linier
           </div>
         </div>
         <div class="card">
           <div class="card-title">Blok 3: Spektral & Lanjut</div>
           <div class="card-desc">
-            • Nilai Eigen & Vektor Eigen<br>
-            • SVD (Singular Value Decomposition)<br>
-            • Dekomposisi LU & Dekomposisi QR<br>
-            • Aljabar Quaternion & Geometri
+             Nilai Eigen & Vektor Eigen<br>
+             SVD (Singular Value Decomposition)<br>
+             Dekomposisi LU & Dekomposisi QR<br>
+             Aljabar Quaternion & Geometri
           </div>
         </div>
       </div>
@@ -656,15 +692,14 @@
 
     <!-- SLIDE 12: Penutup & Pesan Pengampu -->
     <div class="slide" data-index="11">
-      <div class="slide-tag">PESAN PENGAMPU PERKULIAHAN</div>
-      <h1>Langkah Pertama: Nikmati Logika di Balik Matriks</h1>
+      <h1><span class="slide-cat">Pesan Pengampu Perkuliahan</span> Langkah Pertama: Nikmati Logika di Balik Matriks</h1>
       <p>
         Aljabar Linier adalah investasi jangka panjang paling menguntungkan untuk karier Anda di bidang teknologi.
       </p>
 
       <div class="callout" style="border-left-color: var(--success);">
         <strong>Pesan Pembuka dari Aditya Pratama:</strong><br>
-        <em>"Ketika Anda melihat matriks, jangan lihat sekadar sekumpulan baris dan kolom angka. Lihatlah sebuah sistem yang sedang memutar, meregangkan, dan mentransformasikan dunia digital kita. Selamat belajar dan mari bereksplorasi!"</em>
+        <em>“Ketika Anda melihat matriks, jangan lihat sekadar sekumpulan baris dan kolom angka. Lihatlah sebuah sistem yang sedang memutar, meregangkan, dan mentransformasikan dunia digital kita. Selamat belajar dan mari bereksplorasi!"</em>
       </div>
 
       <div class="callout callout-warning" style="margin-top:15px; text-align:center;">
@@ -689,6 +724,7 @@
   </footer>
 
   <script>
+    document.documentElement.classList.replace('no-js', 'js');
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;

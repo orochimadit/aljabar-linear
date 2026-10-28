@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="no-js">
 <head>
   <meta charset="UTF-8">
+    <meta name="description" content="Slide Perkuliahan Aljabar Linier Algeo 02 (Matriks Eselon) UNU Kalbar oleh Aditya Pratama.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Algeo 02: Matriks Eselon (REF & RREF): UNU Kalbar</title>
   <!-- KaTeX for math formulas -->
@@ -10,36 +11,65 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
           onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
   <style>
+/* Hallmark - genre: modern-minimal | theme: cobalt */
     :root {
-      --bg-color: #0b1120;
-      --card-bg: #151e32;
-      --card-border: #24324d;
-      --primary: #10b981;
-      --accent: #a78bfa;
-      --success: #34d399;
-      --warn: #fbbf24;
-      --error: #f87171;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+      --bg-page: oklch(14% 0.02 260);
+      --card-bg: oklch(20% 0.03 255);
+      --card-border: oklch(30% 0.04 255);
+      --primary: oklch(68% 0.17 155);
+      --primary-hover: oklch(62% 0.18 155);
+      --primary-bg: oklch(68% 0.17 155 / 0.12);
+      --primary-border: oklch(68% 0.17 155 / 0.32);
+      --accent: oklch(76% 0.13 220);
+      --accent-hover: oklch(84% 0.11 210);
+      --success: oklch(74% 0.16 160);
+      --warn: oklch(80% 0.16 85);
+      --error: oklch(65% 0.22 25);
+      --text-main: oklch(96% 0.01 240);
+      --text-secondary: oklch(84% 0.02 245);
+      --text-muted: oklch(68% 0.03 250);
+      --btn-ink: oklch(12% 0.02 260);
+      --code-bg: oklch(24% 0.03 255);
+      --overlay-bg: oklch(16% 0.02 260 / 0.92);
+      --shadow-slide: 0 20px 40px oklch(0% 0 0 / 0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      overflow-x: clip;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
       color: var(--text-main);
-      overflow: hidden;
       height: 100vh;
       display: flex;
       flex-direction: column;
       user-select: none;
     }
 
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    button:active, a:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     #progress-container {
       width: 100%;
-      height: 5px;
-      background: #1e293b;
+      height: 4px;
+      background: var(--card-border);
       position: fixed;
       top: 0;
       left: 0;
@@ -47,37 +77,39 @@
     }
     #progress-bar {
       height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #38bdf8, #a78bfa);
-      transition: width 0.3s ease;
+      width: 100%;
+      background: var(--primary);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 24px;
+      padding: 12px 24px;
       border-bottom: 1px solid var(--card-border);
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--overlay-bg);
       backdrop-filter: blur(8px);
       z-index: 10;
     }
     .header-title {
-      font-size: 0.92rem;
+      font-size: 0.9375rem;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--primary);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .header-badge {
-      background: rgba(167, 139, 250, 0.15);
-      color: var(--accent);
-      padding: 3px 10px;
-      border-radius: 9999px;
+      background: var(--primary-bg);
+      color: var(--primary);
+      padding: 4px 8px;
+      border-radius: 4px;
       font-size: 0.75rem;
-      font-weight: 700;
-      border: 1px solid rgba(167, 139, 250, 0.3);
+      font-weight: 600;
+      border: 1px solid var(--primary-border);
     }
     .header-controls {
       display: flex;
@@ -88,14 +120,14 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-main);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.875rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      gap: 8px;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
     .btn-icon:hover {
       background: var(--card-border);
@@ -122,17 +154,20 @@
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 32px 44px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-slide);
       display: flex;
       flex-direction: column;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateX(40px);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       overflow-y: auto;
     }
 
-    .slide.active {
+    .js .slide {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .js .slide.active {
       opacity: 1;
       visibility: visible;
       transform: translateX(0);
@@ -141,223 +176,73 @@
 
     .slide.prev { transform: translateX(-40px); }
 
-    .slide-tag {
+    .slide-cat {
+      display: block;
       color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
+
     .slide h1 {
-      font-size: 2.05rem;
-      font-weight: 800;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
       line-height: 1.25;
-      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--text-main);
+      text-wrap: balance;
+      overflow-wrap: break-word;
+      min-width: 0;
     }
     .slide p {
       font-size: 1rem;
-      color: #cbd5e1;
+      color: var(--text-secondary);
       line-height: 1.55;
       margin-bottom: 12px;
     }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 16px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 10px;
-    }
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 12px;
     }
     .card {
-      background: rgba(15, 23, 42, 0.6);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
       padding: 16px;
     }
     .card-title {
-      font-size: 1rem;
+      font-size: 1.0625rem;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
+      text-wrap: balance;
+      overflow-wrap: break-word;
+      min-width: 0;
     }
     .card-desc {
-      font-size: 0.88rem;
-      color: #cbd5e1;
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
       line-height: 1.5;
     }
 
-    .rule-item {
-      display: flex;
-      gap: 14px;
-      background: rgba(15, 23, 42, 0.7);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      margin-bottom: 10px;
-      align-items: flex-start;
-    }
-    .rule-num {
-      background: var(--accent);
-      color: #0b1120;
-      font-weight: 800;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-    }
-    .rule-content strong {
-      color: var(--text-main);
-      display: block;
-      margin-bottom: 3px;
-    }
-    .rule-content span {
-      color: #94a3b8;
-      font-size: 0.88rem;
-    }
-
-    .matrix-box {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      text-align: center;
-      margin: 8px 0;
-    }
-    .matrix-box .caption {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
     .callout {
-      background: rgba(56, 189, 248, 0.08);
-      border-left: 4px solid var(--primary);
+      background: var(--primary-bg);
+      border: 1px solid var(--primary-border);
       padding: 12px 16px;
-      border-radius: 0 10px 10px 0;
-      margin: 10px 0;
-    }
-    .callout-success {
-      background: rgba(52, 211, 153, 0.08);
-      border-left: 4px solid var(--success);
-    }
-    .callout-error {
-      background: rgba(248, 113, 113, 0.08);
-      border-left: 4px solid var(--error);
-    }
-
-    /* Interactive OBE Web Simulator Widget */
-    .obe-sim-container {
-      background: #0f172a;
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 8px;
-    }
-    .obe-ctrl-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .obe-display-panel {
-      display: flex;
-      gap: 16px;
-    }
-    .obe-mat-view {
-      flex: 1.2;
-      background: #060d1a;
-      border: 1px solid #334155;
       border-radius: 8px;
-      padding: 14px;
-      font-family: Consolas, monospace;
-      font-size: 1.05rem;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1.8;
-      white-space: pre;
-    }
-    .obe-desc-view {
-      flex: 1;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 14px;
-      font-size: 0.88rem;
-      color: #cbd5e1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    /* Exercise & Quiz Styles */
-    .exercise-card {
-      background: #0f172a;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .exercise-card:hover {
-      border-color: var(--accent);
-    }
-    .exercise-badge {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 4px;
-      display: block;
-    }
-    .exercise-status {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-    .status-both { background: rgba(52, 211, 153, 0.2); color: var(--success); border: 1px solid var(--success); }
-    .status-ref { background: rgba(56, 189, 248, 0.2); color: var(--primary); border: 1px solid var(--primary); }
-    .status-neither { background: rgba(248, 113, 113, 0.2); color: var(--error); border: 1px solid var(--error); }
-
-    .btn-toggle-ans {
-      background: #334155;
-      color: var(--text-main);
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.82rem;
-      margin-top: 6px;
-      transition: background 0.2s;
-    }
-    .btn-toggle-ans:hover {
-      background: var(--accent);
-      color: #0b1120;
+      margin: 12px 0;
     }
 
     footer {
@@ -366,26 +251,26 @@
       align-items: center;
       padding: 12px 28px;
       border-top: 1px solid var(--card-border);
-      background: rgba(15, 23, 42, 0.95);
+      background: var(--overlay-bg);
       z-index: 10;
     }
-    .slide-counter { font-size: 0.88rem; color: var(--text-muted); }
-    .nav-buttons { display: flex; gap: 10px; }
+    .slide-counter { font-size: 0.875rem; color: var(--text-muted); }
+    .nav-buttons { display: flex; gap: 12px; }
     .btn-nav {
-      background: var(--accent);
-      color: #0b1120;
+      background: var(--primary);
+      color: var(--btn-ink);
       border: none;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      gap: 8px;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
-    .btn-nav:hover { background: #c4b5fd; }
+    .btn-nav:hover { background: var(--accent-hover); }
     .btn-nav.secondary {
       background: var(--card-bg);
       color: var(--text-main);
@@ -393,12 +278,12 @@
     }
 
     .key-hint {
-      background: #334155;
-      padding: 2px 6px;
+      background: var(--code-bg);
+      padding: 4px 8px;
       border-radius: 4px;
-      font-size: 0.72rem;
-      font-family: monospace;
-      color: #cbd5e1;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
       margin-left: 4px;
     }
 
@@ -408,12 +293,78 @@
       text-align: center;
     }
     .title-slide h1 {
-      font-size: 2.8rem;
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: var(--text-main);
     }
+    .course-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      justify-content: center;
+    }
+    .meta-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+    }
+    .meta-box strong {
+      color: var(--primary);
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    /* Live Canvas Widget Styles */
+    .sim-box {
+      display: flex;
+      gap: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .sim-canvas {
+      background: var(--bg-page);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+    }
+    .sim-ctrl { flex: 1; }
+    .sim-slider-group { margin-bottom: 12px; }
+    .sim-slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .sim-slider-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+    .matrix-live-display {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--success);
+      margin-top: 8px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -425,7 +376,7 @@
   <header>
     <div class="header-title">
       <img src="assets/logo_unukalbar.png" alt="UNU Kalbar" style="height: 24px; vertical-align: middle;">
-      <span class="header-badge">ALGEO 02</span>
+      <span class="header-badge">Algeo 02</span>
       <span>Matriks Eselon (REF & RREF): UNU Kalbar</span>
     </div>
     <div class="header-controls">
@@ -443,18 +394,17 @@
     <!-- SLIDE 1: Judul Slide -->
     <div class="slide title-slide active" data-index="0">
       <div style="margin-bottom: 10px;">
-        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" style="height: 100px; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5));">
+        <img src="assets/logo_unukalbar.png" alt="Logo UNU Kalbar" >
       </div>
-      <div class="slide-tag">UNIVERSITAS NAHDLATUL ULAMA KALIMANTAN BARAT</div>
-      <h1>Matriks Eselon: Konsep REF & RREF</h1>
-      <p style="font-size: 1.25rem; color: #94a3b8; max-width: 760px;">
+      <h1><span class="slide-cat">Universitas Nahdlatul Ulama Kalimantan Barat</span> Matriks Eselon: Konsep REF & RREF</h1>
+      <p >
         Pondasi Utama Metode Eliminasi Gauss & Gauss-Jordan dalam Menyelesaikan Sistem Persamaan Linier (SPL).
       </p>
       <div style="margin-top: 24px; display: flex; gap: 16px; justify-content: center;">
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); padding: 10px 20px; border-radius: 8px; font-size:0.9rem;">
+        <div >
           Dosen: <strong>Aditya Pratama</strong>
         </div>
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); padding: 10px 20px; border-radius: 8px; font-size:0.9rem;">
+        <div >
           Rujukan: <em>Rinaldi Munir (ITB) & Howard Anton</em>
         </div>
       </div>
@@ -462,8 +412,7 @@
 
     <!-- SLIDE 2: Motivasi Masalah -->
     <div class="slide" data-index="1">
-      <div class="slide-tag">LATAR BELAKANG MASALAH</div>
-      <h1>Mengapa Bentuk Eselon Begitu Krusial?</h1>
+      <h1><span class="slide-cat">Latar Belakang Masalah</span> Mengapa Bentuk Eselon Begitu Krusial?</h1>
       <p>
         Sistem persamaan linier di dunia riil memuat banyak variabel yang saling bersilangan. Menyelesaikannya secara substitusi langsung sangat lambat dan rawan galat.
       </p>
@@ -497,8 +446,7 @@
 
     <!-- SLIDE 3: Konsep 1 Utama -->
     <div class="slide" data-index="2">
-      <div class="slide-tag">KUNCI IDENTIFIKASI</div>
-      <h1>Mengenal Konsep "1 Utama" (Leading 1)</h1>
+      <h1><span class="slide-cat">Kunci Identifikasi</span> Mengenal Konsep “1 Utama” (Leading 1)</h1>
       <p>
         Setiap aturan matriks eselon berpijak pada satu elemen istimewa yang disebut <strong>1 Utama (*leading 1*)</strong>.
       </p>
@@ -541,8 +489,7 @@
 
     <!-- SLIDE 4: Tiga Sifat REF -->
     <div class="slide" data-index="3">
-      <div class="slide-tag">DEFINISI FORMAL #1</div>
-      <h1>3 Sifat Wajib Matriks Eselon Baris (REF)</h1>
+      <h1><span class="slide-cat">Definisi Formal #1</span> 3 Sifat Wajib Matriks Eselon Baris (REF)</h1>
       <p>
         Suatu matriks resmi menyandang status <strong>Row Echelon Form (REF)</strong> jika lulus 3 syarat mutlak berikut:
       </p>
@@ -578,9 +525,8 @@
 
     <!-- SLIDE 5: Interactive Web Simulator OBE -->
     <div class="slide" data-index="4">
-      <div class="slide-tag">SIMULASI ANIMASI LANGSUNG</div>
-      <h1>Simulasi Langkah demi Langkah Menuju Bentuk Eselon</h1>
-      <p>Klik tombol <strong>"Langkah Berikutnya ▶"</strong> untuk melihat bagaimana Operasi Baris Elementer (OBE) mentransformasikan matriks acak menjadi bentuk REF dan RREF secara visual:</p>
+      <h1><span class="slide-cat">Simulasi Animasi Langsung</span> Simulasi Langkah demi Langkah Menuju Bentuk Eselon</h1>
+      <p>Klik tombol <strong>“Langkah Berikutnya ▶"</strong> untuk melihat bagaimana Operasi Baris Elementer (OBE) mentransformasikan matriks acak menjadi bentuk REF dan RREF secara visual:</p>
 
       <div class="obe-sim-container">
         <div class="obe-ctrl-bar">
@@ -589,7 +535,7 @@
           </div>
           <div style="display:flex; gap:8px;">
             <button class="btn-icon" id="btn-obe-prev" onclick="prevOBEStep()">◀ Mundur</button>
-            <button class="btn-icon" id="btn-obe-next" onclick="nextOBEStep()" style="background:var(--primary); color:#0b1120; font-weight:700;">Langkah Berikutnya ▶</button>
+            <button class="btn-icon" id="btn-obe-next" onclick="nextOBEStep()" >Langkah Berikutnya ▶</button>
             <button class="btn-icon" onclick="resetOBEStep()">↺ Reset</button>
           </div>
         </div>
@@ -603,11 +549,11 @@
           <div class="obe-desc-view">
             <div>
               <strong id="obe-op-name" style="color:var(--primary); font-size:1rem; display:block; margin-bottom:6px;">Inisialisasi Sistem</strong>
-              <p id="obe-op-desc" style="color:#cbd5e1; font-size:0.88rem; line-height:1.5;">
+              <p id="obe-op-desc" >
                 Matriks sistem persamaan linier awal sebelum dilakukan Operasi Baris Elementer (OBE).
               </p>
             </div>
-            <div id="obe-status-tag" style="background:#0b1120; border:1px solid #334155; padding:6px 10px; border-radius:6px; font-size:0.82rem; color:var(--warn);">
+            <div id="obe-status-tag" >
               Status: Belum Terbentuk Eselon
             </div>
           </div>
@@ -617,8 +563,7 @@
 
     <!-- SLIDE 6: Jebakan & Counterexamples -->
     <div class="slide" data-index="5">
-      <div class="slide-tag">ANALISIS KESALAHAN UMUM</div>
-      <h1>Jebakan: Mengapa Matriks Ini GAGAL Jadi REF?</h1>
+      <h1><span class="slide-cat">Analisis Kesalahan Umum</span> Jebakan: Mengapa Matriks Ini GAGAL Jadi REF?</h1>
 
       <div class="grid-3">
         <div class="card" style="border-color: var(--error);">
@@ -661,8 +606,7 @@
 
     <!-- SLIDE 7: Sifat ke-4 RREF -->
     <div class="slide" data-index="6">
-      <div class="slide-tag">DEFINISI FORMAL #2</div>
-      <h1>Eselon Baris Tereduksi (RREF)</h1>
+      <h1><span class="slide-cat">Definisi Formal #2</span> Eselon Baris Tereduksi (RREF)</h1>
       <p>
         Bentuk paling sempurna dan unik dari suatu matriks! <strong>Reduced Row Echelon Form (RREF)</strong> memenuhi seluruh 3 sifat REF, ditambah <strong>sifat ke-4</strong>:
       </p>
@@ -697,8 +641,7 @@
 
     <!-- SLIDE 8: Perbandingan Gauss vs Gauss-Jordan -->
     <div class="slide" data-index="7">
-      <div class="slide-tag">KOMPARASI METODE</div>
-      <h1>Eliminasi Gauss vs Eliminasi Gauss-Jordan</h1>
+      <h1><span class="slide-cat">Komparasi Metode</span> Eliminasi Gauss vs Eliminasi Gauss-Jordan</h1>
 
       <div class="grid-2">
         <div class="card">
@@ -710,7 +653,7 @@
             0 & 0 & \mathbf{1}
             \end{bmatrix}$$
           </div>
-          <ul style="color:#cbd5e1; font-size:0.9rem; padding-left:20px; line-height:1.6;">
+          <ul >
             <li>Hanya mengenolkan bagian <strong>bawah</strong> diagonal.</li>
             <li>Jumlah operasi hitungan perkalian lebih sedikit.</li>
             <li>Solusi diselesaikan melalui tahap <strong>Substitusi Balik (*Back Substitution*)</strong>.</li>
@@ -726,7 +669,7 @@
             0 & 0 & \mathbf{1}
             \end{bmatrix}$$
           </div>
-          <ul style="color:#cbd5e1; font-size:0.9rem; padding-left:20px; line-height:1.6;">
+          <ul >
             <li>Mengenolkan bagian <strong>bawah dan atas</strong> 1 utama.</li>
             <li>Bentuk RREF dari suatu matriks bersifat <strong>Tunggal / Unik</strong>.</li>
             <li>Solusi langsung terbaca tanpa memerlukan substitusi balik.</li>
@@ -737,8 +680,7 @@
 
     <!-- SLIDE 9: Latihan 1: Uji Identifikasi 8 Matriks (Howard Anton & Rinaldi Munir) -->
     <div class="slide" data-index="8">
-      <div class="slide-tag">CONTOH LATIHAN #1 (DISKUSI KELAS)</div>
-      <h1>Latihan 1: Identifikasi Status Bentuk Matriks</h1>
+      <h1><span class="slide-cat">Contoh Latihan #1 (Diskusi Kelas)</span> Latihan 1: Identifikasi Status Bentuk Matriks</h1>
       <p>Tentukan apakah matriks-matriks berikut termasuk <strong>REF</strong>, <strong>RREF (Keduanya)</strong>, atau <strong>Bukan Keduanya</strong>:</p>
 
       <div class="grid-4">
@@ -806,8 +748,7 @@
 
     <!-- SLIDE 10: Latihan 2: Praktik Perhitungan OBE Mandiri -->
     <div class="slide" data-index="9">
-      <div class="slide-tag">CONTOH LATIHAN #2 (KUIS MANDIRI)</div>
-      <h1>Latihan 2: Reduksi Matriks Menggunakan OBE</h1>
+      <h1><span class="slide-cat">Contoh Latihan #2 (Kuis Mandiri)</span> Latihan 2: Reduksi Matriks Menggunakan OBE</h1>
       <p>Diberikan matriks $A$ berikut. Lakukan Operasi Baris Elementer (OBE) untuk mengubahnya ke bentuk <strong>REF</strong> dan <strong>RREF</strong>:</p>
 
       <div class="grid-2">
@@ -822,7 +763,7 @@
 
         <div class="card">
           <div class="card-title">Kunci Pembahasan Langkah Demi Langkah:</div>
-          <div style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+          <div >
             <strong>Langkah 1 (Nol-kan di bawah kolom 1):</strong><br>
             $R_2 \leftarrow R_2 - 2R_1 \implies [0 \quad 2 \quad -7]$<br>
             $R_3 \leftarrow R_3 - 3R_1 \implies [0 \quad 3 \quad -11]$<br><br>
@@ -842,8 +783,7 @@
 
     <!-- SLIDE 11: Rangkuman & Checklist Praktikum -->
     <div class="slide" data-index="10">
-      <div class="slide-tag">RINGKASAN & JEMBATAN KULIAH</div>
-      <h1>Checklist Validasi untuk Ujian & Praktikum</h1>
+      <h1><span class="slide-cat">Ringkasan & Jembatan Kuliah</span> Checklist Validasi untuk Ujian & Praktikum</h1>
 
       <div class="grid-2">
         <div class="card">
@@ -889,6 +829,7 @@
   </footer>
 
   <script>
+    document.documentElement.classList.replace('no-js', 'js');
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
