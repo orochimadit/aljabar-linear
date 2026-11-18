@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel Algeo 05: Cosine Similarity | Matematika 2 UNU Kalbar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1d; --card:#131b2e; --border:#1e293b; --primary:#38bdf8;
+    --green:#34d399; --amber:#fbbf24; --text:#f8fafc; --muted:#94a3b8;
+    --sans:'Plus Jakarta Sans',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;
+       padding:0 20px 80px;overflow-x:hidden}
+  .wrap{max-width:820px;margin:0 auto}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;
+       padding:18px 0;border-bottom:1px solid var(--border);margin-bottom:36px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:.85rem;letter-spacing:.04em;color:var(--muted)}
+  .brand span{color:var(--green)}
+  .back{font-size:.82rem;color:var(--primary);text-decoration:none;border:1px solid var(--border);
+        padding:8px 14px;border-radius:9px}
+  .back:hover{border-color:var(--primary)}
+  .kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+  h1{font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.3;margin-bottom:14px;letter-spacing:-.01em}
+  .meta{font-size:.82rem;color:var(--muted);margin-bottom:34px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+  h2{font-size:1.18rem;margin:38px 0 12px;color:var(--text);line-height:1.45}
+  h2::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);margin-right:10px;vertical-align:middle}
+  p{margin-bottom:14px;color:#e2e8f0}
+  ul,ol{margin:0 0 16px 22px}
+  li{margin-bottom:8px;color:#e2e8f0}
+  strong{color:#fff}
+  code{font-family:var(--mono);font-size:.86em;color:var(--amber);background:#0b1222;
+       padding:2px 6px;border-radius:5px}
+  pre{background:#0b1222;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+      overflow-x:auto;margin:14px 0 20px}
+  pre code{background:none;padding:0;color:#e2e8f0;font-size:.82rem;line-height:1.65}
+  a{color:var(--primary)}
+  .cta{margin-top:44px;padding:22px 24px;border:1px solid var(--border);border-radius:16px;background:var(--card)}
+  .cta h3{font-size:1rem;margin-bottom:8px}
+  .cta p{font-size:.9rem;color:var(--muted);margin-bottom:14px}
+  .btn{display:inline-block;padding:10px 18px;border-radius:10px;background:#059669;
+       color:#fff;font-weight:700;font-size:.85rem;text-decoration:none}
+  footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--border);font-size:.78rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">UNU KALBAR <span>&bull;</span> MATEMATIKA 2 &mdash; ALJABAR LINIER &amp; GEOMETRI</div>
+    <a class="back" href="index.html">&larr; Portal Materi</a>
+  </div>
+
+  <div class="kicker">Pertemuan 05 &middot; Bagian 4</div>
+  <h1>Cosine Similarity: Cara Komputer Mengukur Kemiripan Makna Dua Teks</h1>
+  <div class="meta">Vektor di Ruang Euclidean &amp; Information Retrieval &middot; Dosen: Aditya Pratama &middot; Referensi: Howard Anton &amp; Rinaldi Munir</div>
+
+  <p>Kalau Anda pernah bertanya bagaimana mesin pencari tahu bahwa sebuah dokumen "mirip" dengan kata kunci yang Anda ketik, jawabannya bukan pencocokan huruf. Jawabannya adalah sudut antara dua vektor.</p>
+
+<p>Artikel ini adalah bagian dari materi <strong>Matematika 2: Aljabar Linier &amp; Geometri</strong> di UNU Kalbar, pembahasan Bagian 4: vektor di ruang Euclidean dan penerapannya pada <em>Information Retrieval</em>.</p>
+
+<h2>Dari Panah ke Daftar Angka</h2>
+
+<p>Di kuliah pengantar, vektor digambar sebagai panah: punya arah dan panjang. Di komputasi, vektor lebih sering berupa daftar bilangan. Vektor (1, 2, 3) tidak harus berarti panah di ruang tiga dimensi — bisa juga berarti sebuah dokumen yang memuat kata pertama satu kali, kata kedua dua kali, dan kata ketiga tiga kali.</p>
+
+<p>Dua operasi yang perlu dipegang sepanjang artikel ini:</p>
+
+<ul>
+<li><strong>Norm</strong> (panjang): akar dari jumlah kuadrat seluruh komponen. Untuk u = (1, 2, 3), norm-nya akar 14, sekitar 3,7417.</li>
+<li><strong>Dot product</strong>: jumlah hasil kali komponen seposisi. Untuk u = (1, 2, 3) dan v = (4, 0, -1), hasilnya 4 + 0 - 3 = 1.</li>
+</ul>
+
+<p>Perhatikan bahwa dot product menghasilkan <strong>satu bilangan</strong>, bukan vektor. Inilah yang membuatnya bisa dipakai sebagai ukuran kedekatan.</p>
+
+<h2>Sudut Antar Vektor</h2>
+
+<p>Dari dua operasi itu lahir rumus yang menjadi inti seluruh artikel:</p>
+
+<p><code>cos &theta; = (u &middot; v) / (||u|| &times; ||v||)</code></p>
+
+<p>Nilainya selalu berada di antara -1 dan 1. Angka 1 berarti kedua vektor searah sempurna, 0 berarti tegak lurus alias tidak berkaitan, dan -1 berarti berlawanan arah.</p>
+
+<p>Pada contoh tadi, cos &theta; = 1 / (3,7417 &times; 4,1231) &asymp; 0,0648, yang setara sudut 86,28 derajat. Hampir tegak lurus — kedua vektor nyaris tidak berbagi arah.</p>
+
+<h2>Mengubah Dokumen Menjadi Vektor</h2>
+
+<p>Cara paling sederhana: buat kamus kata, lalu hitung kemunculan setiap kata pada dokumen. Hasilnya disebut <em>term frequency</em>.</p>
+
+<pre><code>Kamus: [aljabar, matriks, vektor, ai]
+
+D1  "aljabar matriks determinan"  -&gt; (3, 2, 1, 0)
+D2  "vektor embedding ai"         -&gt; (0, 1, 3, 2)
+Q   "aljabar matriks"             -&gt; (2, 1, 0, 0)</code></pre>
+
+<p>Dengan kamus 10.000 kata, setiap dokumen menjadi vektor di ruang berdimensi 10.000. Tidak bisa digambar, tetapi semua rumus sebelumnya tetap berlaku tanpa perubahan.</p>
+
+<h2>Menghitung Skor Kemiripan</h2>
+
+<p>Masukkan vektor kueri dan dokumen ke rumus cosinus:</p>
+
+<pre><code>q &middot; D1 = 2(3) + 1(2) = 8
+||q|| = akar 5 = 2,2361
+||D1|| = akar 14 = 3,7417
+
+sim(q, D1) = 8 / (2,2361 &times; 3,7417) = 0,9562</code></pre>
+
+<pre><code>q &middot; D2 = 2(0) + 1(1) = 1
+||D2|| = akar 14 = 3,7417
+
+sim(q, D2) = 1 / (2,2361 &times; 3,7417) = 0,1195</code></pre>
+
+<p>Dokumen pertama mendapat 0,9562 dan yang kedua 0,1195. Sistem lalu mengurutkan dari skor terbesar — dan itulah peringkat hasil pencarian yang Anda lihat di layar.</p>
+
+<h2>Kenapa Cosine, Bukan Jarak Biasa</h2>
+
+<p>Pertanyaan yang wajar: kenapa tidak memakai jarak Euclidean saja, yang lebih mudah dibayangkan?</p>
+
+<p>Karena jarak mengukur <strong>besaran</strong>, sedangkan yang kita butuhkan adalah <strong>arah</strong>. Dokumen 1.000 kata tentang topik yang sama akan selalu berjarak jauh dari kueri pendek, meski isinya sangat relevan. Sebaliknya, dokumen 20 kata yang kebetulan dekat secara angka bisa menang padahal topiknya melenceng.</p>
+
+<p>Cosine menyelesaikan ini karena membagi hasil kali norm. Panjang dokumen saling menghapus, dan yang tersisa hanya proporsi kata — arah topiknya.</p>
+
+<h2>Proyeksi Ortogonal: Konsep di Belakangnya</h2>
+
+<p>Cosine bukan rumus ajaib. Ia turunan dari proyeksi: mengukur berapa banyak satu vektor "mengikuti arah" vektor lain.</p>
+
+<p><code>proj_u v = ((v &middot; u) / (u &middot; u)) &times; u</code></p>
+
+<p>Contoh: u = (3, 4) dan v = (5, 1). Proyeksinya (2,28; 3,04), dan sisanya (2,72; -2,04). Kalau sisa itu dikalikan titik dengan u, hasilnya nol — bukti bahwa keduanya tegak lurus.</p>
+
+<p>Pemeriksaan sederhana ini berguna saat ujian: jika hasilnya bukan nol, ada kesalahan hitung di langkah sebelumnya.</p>
+
+<h2>Jebakan yang Sering Terjadi</h2>
+
+<ul>
+<li><strong>Vektor nol.</strong> Kalau kueri tidak memuat satu pun kata dari kamus, norm-nya nol dan pembagian gagal. Tangani sebagai "tidak ada hasil", bukan dibiarkan menjadi error.</li>
+<li><strong>Kamus tidak sinkron.</strong> Urutan kata pada dokumen dan kueri harus identik. Satu kata bergeser, seluruh perhitungan jadi tidak bermakna.</li>
+<li><strong>Kata umum mendominasi.</strong> Tanpa pembobotan, kata seperti "dan" atau "yang" bisa menentukan skor. Solusinya TF-IDF, bukan mengganti cosine-nya.</li>
+<li><strong>Tertukar jarak dan kemiripan.</strong> Di SciPy, <code>cosine()</code> mengembalikan <em>jarak</em> (1 - similarity). Kalau diurutkan naif, hasilnya justru terbalik.</li>
+</ul>
+
+<h2>Implementasi Singkat</h2>
+
+<pre><code>import numpy as np
+
+def cosine(q, d):
+    q, d = np.array(q, float), np.array(d, float)
+    nq, nd = np.linalg.norm(q), np.linalg.norm(d)
+    if nq == 0 or nd == 0:
+        return 0.0
+    return float(q @ d / (nq * nd))
+
+D1, D2, Q = [3,2,1,0], [0,1,3,2], [2,1,0,0]
+print(cosine(Q, D1))   # 0.9562
+print(cosine(Q, D2))   # 0.1195</code></pre>
+
+<h2>Kaitan ke AI Modern</h2>
+
+<p>Model embedding — termasuk yang dipakai chatbot dan sistem rekomendasi — menghasilkan vektor berdimensi ratusan hingga ribuan untuk setiap potongan teks. Perbandingan antarvektor itu memakai cosine similarity yang sama persis, hanya saja nilainya bisa negatif karena komponennya tidak lagi berupa jumlah kata.</p>
+
+<p>Artinya, rumus yang Anda pelajari di pertemuan ini bukan latihan akademis. Ia masih dipakai di mesin pencari, sistem rekomendasi, dan basis data vektor yang kini menjamur.</p>
+
+<h2>Latihan</h2>
+
+<ol>
+<li>Hitung manual cos(Q, D1) dan cos(Q, D2) pada contoh di atas, lalu cocokkan dengan hasil kode.</li>
+<li>Tambahkan dokumen D3 = (1, 3, 0, 1). Tentukan peringkatnya terhadap Q.</li>
+<li>Ambil lima abstrak jurnal, bangun kamus 30 kata, lalu urutkan kelima dokumen terhadap satu kueri. Jelaskan mengapa peringkatnya begitu.</li>
+</ol>
+
+<p>Slide lengkap pertemuan ini, termasuk contoh proyeksi dan pembahasan jebakan, tersedia di <a href="slide_algeo05_vektor_euclidean.html">Materi Algeo 05 — Vektor di Ruang Euclidean &amp; Cosine Similarity</a>. Seluruh deck mata kuliah ini bisa diakses dari <a href="index.html">portal Matematika 2</a>.</p>
+
+  <div class="cta">
+    <h3>Lanjutan materi ini</h3>
+    <p>Slide interaktif pertemuan 05 memuat contoh proyeksi ortogonal dan latihan terbimbing.</p>
+    <a class="btn" href="slide_algeo05_vektor_euclidean.html">Buka Slide Pertemuan 05 &rarr;</a>
+  </div>
+
+  <footer>Matematika 2 &mdash; Aljabar Linier &amp; Geometri &middot; Program Studi Teknologi Informasi, Universitas Nahdlatul Ulama Kalimantan Barat.</footer>
+</div>
+</body>
+</html>
