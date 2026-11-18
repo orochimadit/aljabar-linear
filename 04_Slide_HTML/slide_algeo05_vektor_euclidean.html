@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Algeo 05: Ruang Vektor, Basis &amp; Dimensi: UNU Kalbar</title>
+  <title>Algeo 05: Vektor di Ruang Euclidean &amp; Cosine Similarity: UNU Kalbar</title>
   
   <!-- Fonts & MathJax -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -308,21 +308,21 @@
     <div class="slide active">
       <span class="slide-tag">Algeo 05 &bull; Slide 1 / 11</span>
 
-      <h2>Ruang Vektor, Kebebasan Linear, Basis &amp; Dimensi</h2>
+      <h2>Vektor di Ruang Euclidean &amp; Cosine Similarity</h2>
       <div class="slide-body">
-        <p>Setelah bisa menyelesaikan sistem dan membalik matriks, pertanyaan berikutnya: <strong>berapa banyak informasi yang benar-benar dibawa sekumpulan vektor?</strong></p>
+        <p>Bagian 4 referensi: dari vektor sebagai objek geometri menuju vektor sebagai <strong>representasi makna</strong> &mdash; dasar sistem temu balik informasi dan embedding AI.</p>
         <div class="grid-2">
           <div class="box box-green">
             <h3>🎯 Tujuan Pembelajaran</h3>
             <ul>
-              <li>Membedakan <strong>kombinasi linear</strong>, <strong>rentang (span)</strong>, dan <strong>kebebasan linear</strong>.</li>
-              <li>Menentukan apakah suatu himpunan vektor membentuk <strong>basis</strong>.</li>
-              <li>Menghitung <strong>dimensi</strong> ruang dan subruang lewat rank matriks.</li>
+              <li>Menghitung <strong>norm</strong>, <strong>dot product</strong>, dan <strong>sudut</strong> antar vektor di R&#8319;.</li>
+              <li>Menghitung <strong>proyeksi ortogonal</strong> dan memahami sisa yang tegak lurus.</li>
+              <li>Menerapkan <strong>cosine similarity</strong> untuk mengurutkan dokumen terhadap kueri.</li>
             </ul>
           </div>
           <div class="box box-purple">
-            <h3>🔗 Sambungan Pertemuan 04</h3>
-            <p>Determinan memberi tahu apakah kolom sebuah matriks <em>independen</em>. Sekarang kita beri nama untuk konsep itu, dan memperluasnya ke ruang berdimensi berapa pun.</p>
+            <h3>📚 Rujukan</h3>
+            <p>Howard Anton, <em>Elementary Linear Algebra</em> &mdash; bab ruang Euclidean. Rinaldi Munir, materi Aljabar Linier STEI ITB &mdash; bagian aplikasi <em>Information Retrieval</em>.</p>
           </div>
         </div>
       </div>
@@ -332,28 +332,23 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 2 / 11</span>
 
-      <h2>Vektor di R&#8319; dan Operasinya</h2>
+      <h2>Vektor di R&#8319; dan Panjangnya</h2>
       <div class="slide-body">
         <div class="grid-2">
           <div class="box">
-            <h3>Bentuk</h3>
-            <p class="eq">v = (v&#8321;, v&#8322;, &hellip;, v&#8345;)</p>
-            <p>Vektor di R<sup>n</sup> hanyalah daftar n bilangan. Tidak harus panah di ruang geometri &mdash; bisa juga fitur sebuah data.</p>
+            <h3>Norm (panjang)</h3>
+            <p class="eq">&#8214;v&#8214; = &radic;(v&#8321;&sup2; + v&#8322;&sup2; + &hellip; + v&#8345;&sup2;)</p>
+            <p>Disebut juga norm Euclidean atau L2. Selalu &ge; 0, dan nol hanya untuk vektor nol.</p>
           </div>
           <div class="box box-amber">
-            <h3>Dua operasi saja</h3>
-            <ul>
-              <li><strong>Penjumlahan:</strong> elemen seposisi dijumlahkan</li>
-              <li><strong>Perkalian skalar:</strong> setiap elemen dikali satu bilangan</li>
-            </ul>
-            <p>Seluruh aljabar linear dibangun dari dua operasi ini &mdash; termasuk kombinasi linear.</p>
+            <h3>Contoh</h3>
+            <p class="eq">u = (1, 2, 3) &rarr; &#8214;u&#8214; = &radic;14 &asymp; 3,7417</p>
+            <p class="eq">v = (4, 0, &minus;1) &rarr; &#8214;v&#8214; = &radic;17 &asymp; 4,1231</p>
           </div>
         </div>
-        <div class="box box-green">
-          <h3>Contoh</h3>
-          <p class="eq">u = (1, 2, 3), v = (4, 0, &minus;1)</p>
-          <p class="eq">u + v = (5, 2, 2)</p>
-          <p class="eq">3u = (3, 6, 9)</p>
+        <div class="box box-purple">
+          <h3>Mengapa panjang penting</h3>
+          <p>Dokumen panjang dan dokumen pendek tidak bisa dibandingkan mentah-mentah. Norm dipakai untuk <strong>menormalkan</strong> &mdash; itu inti dari cosine similarity nanti.</p>
         </div>
       </div>
 
@@ -362,24 +357,27 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 3 / 11</span>
 
-      <h2>Kombinasi Linear</h2>
+      <h2>Dot Product</h2>
       <div class="slide-body">
         <div class="box">
           <h3>Definisi</h3>
-          <p class="eq">w = c&#8321;v&#8321; + c&#8322;v&#8322; + &hellip; + c&#8342;v&#8342;</p>
-          <p>Dengan c&#7522; sembarang skalar. Jika w bisa ditulis seperti ini, maka w adalah <strong>kombinasi linear</strong> dari v&#8321;&hellip;v&#8342;.</p>
+          <p class="eq">u &middot; v = u&#8321;v&#8321; + u&#8322;v&#8322; + &hellip; + u&#8345;v&#8345;</p>
+          <p>Hasilnya <strong>skalar</strong>, bukan vektor. Ini yang membedakannya dari perkalian elemen-per-elemen.</p>
         </div>
         <div class="grid-2">
           <div class="box box-green">
-            <h3>Contoh yang berhasil</h3>
-            <p class="eq">w = (4, 5) dari v&#8321;=(1,0), v&#8322;=(0,1)</p>
-            <p class="eq">w = 4v&#8321; + 5v&#8322;</p>
-            <p>Setiap vektor di R&sup2; bisa dibentuk dari keduanya.</p>
+            <h3>Contoh</h3>
+            <p class="eq">u = (1, 2, 3), v = (4, 0, &minus;1)</p>
+            <p class="eq">u &middot; v = 4 + 0 &minus; 3 = <strong>1</strong></p>
           </div>
-          <div class="box box-amber">
-            <h3>Contoh yang gagal</h3>
-            <p class="eq">w = (0, 1) dari v&#8321;=(1,0), v&#8322;=(2,0)</p>
-            <p>Kedua vektor hanya bergerak di sumbu x. Berapa pun kombinasinya, komponen y tetap 0. <strong>w di luar jangkauan</strong>.</p>
+          <div class="box">
+            <h3>Sifat</h3>
+            <ul>
+              <li>Komutatif: u&middot;v = v&middot;u</li>
+              <li>Distributif terhadap penjumlahan</li>
+              <li>u&middot;u = &#8214;u&#8214;&sup2;</li>
+              <li>u&middot;v = 0 &hArr; saling tegak lurus (ortogonal)</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -389,30 +387,29 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 4 / 11</span>
 
-      <h2>Rentang (Span)</h2>
+      <h2>Sudut Antar Vektor</h2>
       <div class="slide-body">
-        <p><strong>Span</strong> adalah himpunan <em>semua</em> kombinasi linear yang mungkin dari vektor-vektor itu &mdash; seluruh wilayah yang bisa dijangkau.</p>
-        <div class="grid-2">
-          <div class="box">
-            <h3>Di R&sup2;</h3>
-            <ul>
-              <li>Satu vektor tak nol &rarr; span berupa <strong>garis</strong></li>
-              <li>Dua vektor yang tidak segaris &rarr; span berupa <strong>seluruh bidang</strong></li>
-              <li>Dua vektor segaris &rarr; tetap garis</li>
-            </ul>
-          </div>
-          <div class="box">
-            <h3>Di R&sup3;</h3>
-            <ul>
-              <li>Satu vektor &rarr; garis</li>
-              <li>Dua vektor bebas &rarr; bidang</li>
-              <li>Tiga vektor bebas &rarr; seluruh ruang</li>
-            </ul>
-          </div>
+        <div class="box">
+          <h3>Rumus</h3>
+          <p class="eq">cos &theta; = (u &middot; v) / (&#8214;u&#8214; &middot; &#8214;v&#8214;)</p>
+          <p>Dari sini lahir dua konsep sekaligus: <strong>kemiripan arah</strong> (nilai cosinus) dan <strong>sudut</strong> yang bisa dihitung dengan arccos.</p>
         </div>
-        <div class="box box-purple">
-          <h3>Praktisnya</h3>
-          <p>Span dari kolom-kolom matriks = ruang kolom. Menghitungnya sama dengan mencari <strong>kolom pivot</strong> setelah reduksi baris &mdash; keterampilan dari pertemuan 03.</p>
+        <div class="grid-2">
+          <div class="box box-green">
+            <h3>Contoh</h3>
+            <p class="eq">cos &theta; = 1 / (3,7417 &middot; 4,1231) &asymp; 0,0648</p>
+            <p class="eq">&theta; &asymp; 86,28&deg;</p>
+            <p>Hampir tegak lurus &mdash; kedua vektor nyaris tidak berbagi arah.</p>
+          </div>
+          <div class="box box-amber">
+            <h3>Bacaan nilai</h3>
+            <ul>
+              <li><strong>1</strong> &rarr; searah sempurna</li>
+              <li><strong>0</strong> &rarr; tegak lurus, tidak berkaitan</li>
+              <li><strong>&minus;1</strong> &rarr; berlawanan arah</li>
+            </ul>
+            <p>Pada data teks, nilai hampir selalu 0 sampai 1 karena komponennya tidak negatif.</p>
+          </div>
         </div>
       </div>
 
@@ -421,27 +418,24 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 5 / 11</span>
 
-      <h2>Kebebasan Linear</h2>
+      <h2>Proyeksi Ortogonal</h2>
       <div class="slide-body">
         <div class="box">
-          <h3>Definisi</h3>
-          <p>Vektor v&#8321;&hellip;v&#8342; <strong>bebas linear</strong> jika</p>
-          <p class="eq">c&#8321;v&#8321; + &hellip; + c&#8342;v&#8342; = 0</p>
-          <p>hanya punya satu solusi: <span class="eq">c&#8321; = c&#8322; = &hellip; = c&#8342; = 0</span>.</p>
-          <p>Jika ada solusi lain (ada c yang bukan nol), himpunan itu <strong>bergantung linear</strong>.</p>
+          <h3>Rumus</h3>
+          <p class="eq">proj&#8336;v = ((v &middot; u) / (u &middot; u)) &middot; u</p>
+          <p>Hasilnya vektor &mdash; bayangan v pada arah u. Sisanya, <span class="eq">v &minus; proj</span>, selalu <strong>tegak lurus</strong> terhadap u.</p>
         </div>
         <div class="grid-2">
           <div class="box box-green">
-            <h3>Makna intuitif</h3>
-            <p>Bergantung linear = <strong>ada vektor yang tidak membawa informasi baru</strong>, karena bisa dibentuk dari yang lain.</p>
+            <h3>Contoh</h3>
+            <p class="eq">u = (3, 4), v = (5, 1)</p>
+            <p class="eq">proj = (19/25)(3,4) = (2,28; 3,04)</p>
+            <p class="eq">sisa = (2,72; &minus;2,04)</p>
           </div>
           <div class="box box-amber">
-            <h3>Uji cepat</h3>
-            <ul>
-              <li>Ada vektor nol di dalam himpunan &rarr; pasti bergantung</li>
-              <li>Jumlah vektor &gt; dimensi ruang &rarr; pasti bergantung</li>
-              <li>Dua vektor kelipatan &rarr; bergantung</li>
-            </ul>
+            <h3>Uji</h3>
+            <p class="eq">(sisa) &middot; u = 0</p>
+            <p>Kalau hasilnya bukan nol, ada kesalahan hitung. Ini cara memeriksa proyeksi tanpa mengulang dari awal.</p>
           </div>
         </div>
       </div>
@@ -451,28 +445,19 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 6 / 11</span>
 
-      <h2>Menguji dengan Matriks</h2>
+      <h2>Dari Vektor ke Dokumen</h2>
       <div class="slide-body">
-        <p>Susun vektor sebagai kolom matriks, lalu reduksi baris. Jumlah <strong>kolom pivot</strong> = jumlah vektor yang bebas linear.</p>
-        <div class="grid-2">
-          <div class="box box-green">
-            <h3>Bebas</h3>
-            <pre>A = [[1, 2, 3],
-     [0, 1, 4],
-     [5, 6, 0]]</pre>
-            <p><span class="eq">rank(A) = 3</span>, <span class="eq">det(A) = 1</span> &rarr; tiga kolom bebas linear.</p>
-          </div>
-          <div class="box box-amber">
-            <h3>Bergantung</h3>
-            <pre>M = [[1, 2, 3],
-     [2, 4, 6],
-     [1, 1, 1]]</pre>
-            <p><span class="eq">rank(M) = 2</span> &rarr; dari tiga vektor, hanya dua yang membawa informasi baru. Kolom 2 = 2 &times; kolom 1.</p>
-          </div>
+        <p>Cara paling sederhana mengubah teks menjadi vektor: hitung kemunculan kata (<em>term frequency</em>).</p>
+        <div class="box">
+          <h3>Kamus</h3>
+          <p class="eq">[aljabar, matriks, vektor, ai]</p>
+          <pre>D1  "aljabar matriks determinan"   -> (3, 2, 1, 0)
+D2  "vektor embedding ai"           -> (0, 1, 3, 2)
+Q   "aljabar matriks"               -> (2, 1, 0, 0)</pre>
         </div>
         <div class="box box-purple">
-          <h3>Aturan penghubung</h3>
-          <p>Untuk matriks persegi n&times;n: <strong>bebas linear &hArr; det &ne; 0</strong>. Inilah jembatan antara pertemuan 04 dan 05.</p>
+          <h3>Yang perlu disadari</h3>
+          <p>Setiap kata menjadi satu dimensi. Dengan 10.000 kata, setiap dokumen adalah vektor di R<sup>10.000</sup> &mdash; tidak bisa digambar, tapi semua rumus di pertemuan ini tetap berlaku.</p>
         </div>
       </div>
 
@@ -481,28 +466,23 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 7 / 11</span>
 
-      <h2>Basis</h2>
+      <h2>Cosine Similarity</h2>
       <div class="slide-body">
         <div class="box">
-          <h3>Definisi</h3>
-          <p>Himpunan vektor disebut <strong>basis</strong> sebuah ruang jika memenuhi dua syarat sekaligus:</p>
-          <ol>
-            <li><strong>Merentang</strong> ruang itu &mdash; semua anggotanya bisa dibentuk</li>
-            <li><strong>Bebas linear</strong> &mdash; tidak ada yang berlebih</li>
-          </ol>
+          <h3>Rumus</h3>
+          <p class="eq">sim(q, d) = (q &middot; d) / (&#8214;q&#8214; &middot; &#8214;d&#8214;)</p>
+          <p>Persis rumus cosinus tadi, hanya diberi nama sesuai konteksnya: mengukur kemiripan dokumen dengan kueri.</p>
         </div>
-        <div class="grid-2">
-          <div class="box box-green">
-            <h3>Basis standar R&sup2;</h3>
-            <p class="eq">e&#8321; = (1, 0), e&#8322; = (0, 1)</p>
-            <p>Setiap vektor (x, y) = x&middot;e&#8321; + y&middot;e&#8322;. Paling sederhana, tapi bukan satu-satunya.</p>
-          </div>
-          <div class="box box-amber">
-            <h3>Basis lain</h3>
-            <p class="eq">b&#8321; = (1, 1), b&#8322; = (1, &minus;1)</p>
-            <p class="eq">(3, 5) = 4b&#8321; &minus; 1b&#8322;</p>
-            <p>Vektor sama, koordinat berbeda. Basis menentukan <strong>bahasa</strong>-nya, bukan objeknya.</p>
-          </div>
+        <div class="box box-green">
+          <h3>Perhitungan pada contoh</h3>
+          <p class="eq">q &middot; D1 = 2(3) + 1(2) = 8 &nbsp;&nbsp; &#8214;q&#8214; = &radic;5, &#8214;D1&#8214; = &radic;14</p>
+          <p class="eq">sim(q, D1) = 8 / (2,2361 &middot; 3,7417) &asymp; <strong>0,9562</strong></p>
+          <p class="eq">q &middot; D2 = 2(0) + 1(1) = 1 &nbsp;&nbsp; &#8214;D2&#8214; = &radic;14</p>
+          <p class="eq">sim(q, D2) = 1 / (2,2361 &middot; 3,7417) &asymp; <strong>0,1195</strong></p>
+        </div>
+        <div class="box box-amber">
+          <h3>Kesimpulan sistem</h3>
+          <p>D1 jauh lebih relevan (0,96 vs 0,12). Urutan hasil pencarian ditentukan angka ini &mdash; inilah cara kerja dasar mesin pencari.</p>
         </div>
       </div>
 
@@ -511,32 +491,23 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 8 / 11</span>
 
-      <h2>Dimensi</h2>
+      <h2>Kenapa Cosine, Bukan Jarak Biasa</h2>
       <div class="slide-body">
-        <div class="box">
-          <h3>Definisi</h3>
-          <p><strong>Dimensi</strong> sebuah ruang = jumlah vektor dalam basisnya. Nilainya unik: semua basis untuk ruang yang sama punya jumlah vektor yang sama.</p>
-        </div>
         <div class="grid-2">
-          <div class="box">
-            <h3>Contoh</h3>
-            <ul>
-              <li>R&sup2; &rarr; dimensi 2</li>
-              <li>R&sup3; &rarr; dimensi 3</li>
-              <li>Garis lewat titik asal di R&sup3; &rarr; dimensi 1</li>
-              <li>Bidang lewat titik asal di R&sup3; &rarr; dimensi 2</li>
-            </ul>
-          </div>
           <div class="box box-amber">
-            <h3>Subruang</h3>
-            <p>Subruang harus memuat vektor nol, tertutup terhadap penjumlahan dan perkalian skalar. Garis yang tidak lewat titik asal <strong>bukan</strong> subruang.</p>
+            <h3>Masalah jarak Euclidean</h3>
+            <p>Dokumen panjang otomatis berjarak jauh dari kueri pendek &mdash; meski isinya sangat relevan. Jarak mengukur <strong>besaran</strong>, bukan arah.</p>
+            <p>Dokumen 1.000 kata tentang topik yang sama akan kalah dari dokumen 20 kata yang kebetulan dekat.</p>
+          </div>
+          <div class="box box-green">
+            <h3>Keunggulan cosine</h3>
+            <p>Karena dibagi hasil kali norm, panjang dokumen <strong>dinormalkan</strong>. Yang tersisa hanya arah &mdash; kemiripan topik.</p>
+            <p>Dokumen panjang dan pendek dengan proporsi kata sama akan mendapat nilai identik.</p>
           </div>
         </div>
         <div class="box box-purple">
-          <h3>Hubungan dengan rank</h3>
-          <p class="eq">dim(ruang kolom) = rank(A)</p>
-          <p class="eq">dim(ruang nol) = n &minus; rank(A)</p>
-          <p>Dua angka ini menjelaskan seluruh perilaku sistem linear: berapa solusi bebas dan berapa yang terikat.</p>
+          <h3>Kaitannya dengan AI modern</h3>
+          <p>Embedding model (termasuk yang dipakai chatbot) menghasilkan vektor yang dibandingkan dengan cara yang sama: cosine similarity. Bedanya, dimensinya ratusan sampai ribuan dan nilainya bisa negatif.</p>
         </div>
       </div>
 
@@ -545,29 +516,29 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 9 / 11</span>
 
-      <h2>Kesalahan yang Sering Terjadi</h2>
+      <h2>Jebakan saat Menerapkan</h2>
       <div class="slide-body">
         <div class="grid-2">
           <div class="box box-amber">
-            <h3>Soal konsep</h3>
+            <h3>Kesalahan teknis</h3>
             <ul>
-              <li>Menganggap "banyak vektor" berarti "merentang lebih luas" &mdash; padahal bisa sebaliknya</li>
-              <li>Menganggap basis harus ortogonal atau satuan &mdash; tidak, itu basis <em>ortonormal</em></li>
-              <li>Mengira koordinat vektor bersifat mutlak &mdash; selalu relatif terhadap basis</li>
+              <li><strong>Vektor nol</strong> &mdash; jika kueri tidak memuat satu pun kata dari kamus, norm = 0 dan pembagian gagal. Tangani sebagai "tidak ada hasil".</li>
+              <li><strong>Lupa menyamakan kamus</strong> antara dokumen dan kueri &mdash; urutan kata harus identik.</li>
+              <li><strong>Membandingkan sebelum normalisasi</strong> lalu bingung hasilnya aneh.</li>
             </ul>
           </div>
           <div class="box">
-            <h3>Soal hitung</h3>
+            <h3>Kesalahan konsep</h3>
             <ul>
-              <li>Menghitung rank dari matriks yang belum direduksi</li>
-              <li>Lupa bahwa vektor nol selalu membuat himpunan bergantung</li>
-              <li>Menyimpulkan bebas linear hanya dari jumlah baris, tanpa memeriksa pivot</li>
+              <li>Menganggap cosine = probabilitas. Bukan; ia hanya ukuran arah.</li>
+              <li>Mengira skor 0,5 berarti "setengah relevan" &mdash; tidak ada skala absolut seperti itu.</li>
+              <li>Lupa bahwa kata umum (<em>dan</em>, <em>yang</em>) mendominasi tanpa pembobotan IDF.</li>
             </ul>
           </div>
         </div>
         <div class="box box-green">
-          <h3>Cara aman</h3>
-          <p>Selalu: susun sebagai kolom &rarr; reduksi &rarr; hitung pivot &rarr; baru simpulkan. Jangan menebak dari tampilan awal matriks.</p>
+          <h3>Perbaikan standar</h3>
+          <p>Gunakan <strong>TF-IDF</strong> alih-alih frekuensi mentah, lalu normalkan vektor sebelum dihitung. Cosine tetap sama; hanya bahan masuknya yang lebih baik.</p>
         </div>
       </div>
 
@@ -576,28 +547,23 @@
     <div class="slide">
       <span class="slide-tag">Algeo 05 &bull; Slide 10 / 11</span>
 
-      <h2>Di Python: Rank dan Ruang Nol</h2>
+      <h2>Implementasi</h2>
       <div class="slide-body">
         <pre>import numpy as np
-from scipy.linalg import null_space
 
-M = np.array([[1, 2, 3],
-              [2, 4, 6],
-              [1, 1, 1]], float)
+def cosine(q, d):
+    q, d = np.array(q, float), np.array(d, float)
+    nq, nd = np.linalg.norm(q), np.linalg.norm(d)
+    if nq == 0 or nd == 0:
+        return 0.0
+    return float(q @ d / (nq * nd))
 
-print(np.linalg.matrix_rank(M))   # 2
-print(np.linalg.det(M))           # 0.0
-
-ns = null_space(M)
-print(ns.shape[1])                # 1 -> dimensi ruang nol
-print(ns.round(3))                # vektor arah ketergantungan</pre>
-        <div class="box box-amber">
-          <h3>Yang perlu dijaga</h3>
-          <ul>
-            <li>Rank dihitung secara numerik &mdash; matriks dengan angka sangat kecil bisa dilaporkan rank berbeda dari perhitungan tangan</li>
-            <li>Gunakan <span class="eq">np.linalg.matrix_rank(M, tol=...)</span> bila ragu</li>
-            <li>Vektor basis ruang nol hanya unik sampai perkalian skalar &mdash; arahnya yang bermakna</li>
-          </ul>
+D1, D2, Q = [3,2,1,0], [0,1,3,2], [2,1,0,0]
+print(cosine(Q, D1))   # 0.9562
+print(cosine(Q, D2))   # 0.1195</pre>
+        <div class="box box-purple">
+          <h3>Catatan pustaka</h3>
+          <p>SciPy menyediakan <span class="eq">scipy.spatial.distance.cosine</span>, tapi nilainya adalah <strong>jarak</strong> (1 &minus; similarity). Jangan tertukar saat mengurutkan hasil pencarian &mdash; urutkan dari jarak terkecil, atau konversi dulu.</p>
         </div>
       </div>
 
@@ -612,23 +578,23 @@ print(ns.round(3))                # vektor arah ketergantungan</pre>
           <div class="box box-green">
             <h3>In-Lab</h3>
             <ol>
-              <li>Tentukan apakah (2,4,6) bebas linear terhadap (1,2,3) &mdash; buktikan dengan definisi, bukan intuisi.</li>
-              <li>Hitung rank matriks yang kolomnya (1,2,3), (0,1,4), (5,6,0), lalu simpulkan apakah ketiganya basis R&sup3;.</li>
-              <li>Verifikasi dengan NumPy dan bandingkan hasilnya.</li>
+              <li>Hitung manual cos(Q, D1) dan cos(Q, D2) pada contoh slide 7, lalu cocokkan dengan kode.</li>
+              <li>Tambah dokumen D3 = (1, 3, 0, 1). Tentukan peringkat relevansinya terhadap Q.</li>
+              <li>Hitung proyeksi D1 pada arah Q, lalu periksa sisa orthogonal-nya.</li>
             </ol>
           </div>
           <div class="box box-purple">
             <h3>Take-Home</h3>
-            <p>Ambil satu himpunan 4 vektor di R&sup3;. Tentukan rank, pilih subset yang membentuk basis, lalu tulis vektor keempat sebagai kombinasi linear dari basis itu. Jelaskan mengapa pilihan Anda sah.</p>
+            <p>Ambil 5 abstrak jurnal (boleh dari paper Anda sendiri). Bangun kamus 30 kata, hitung vektor TF, lalu urutkan kelima dokumen terhadap satu kueri. Laporkan skor cosine dan jelaskan mengapa peringkatnya begitu.</p>
           </div>
         </div>
         <div class="box box-amber">
           <h3>Rangkuman</h3>
           <ul>
-            <li><strong>Kombinasi linear</strong> = membentuk vektor baru dari yang ada.</li>
-            <li><strong>Span</strong> = seluruh wilayah yang bisa dijangkau.</li>
-            <li><strong>Bebas linear</strong> = tidak ada informasi berlebih; diuji lewat rank atau determinan.</li>
-            <li><strong>Basis</strong> = bebas linear <em>dan</em> merentang; <strong>dimensi</strong> = jumlah anggotanya.</li>
+            <li><strong>Norm</strong> = panjang; dipakai untuk menormalkan.</li>
+            <li><strong>Dot product</strong> = ukuran kesamaan arah sebelum dinormalkan.</li>
+            <li><strong>Cosine similarity</strong> = dot product yang dibagi hasil kali norm; rentang &minus;1 sampai 1.</li>
+            <li><strong>Proyeksi</strong> = komponen v pada arah lain; sisanya selalu tegak lurus.</li>
           </ul>
         </div>
       </div>
